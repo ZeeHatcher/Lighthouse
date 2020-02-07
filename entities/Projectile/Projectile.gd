@@ -10,6 +10,8 @@ func _physics_process(delta: float) -> void:
 	if (collision):
 		if (collision.collider.is_in_group("enemies")):
 			collision.collider.queue_free()
+		else:
+			queue_free()
 
 func point_to(target: Vector2) -> void:
 	look_at(target)

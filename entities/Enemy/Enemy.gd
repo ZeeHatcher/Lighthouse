@@ -9,4 +9,8 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	var collision = move_and_collide(velocity * delta)
+	
+func face(direction: int) -> void:
+	if (direction):
+		velocity *= -1
 
