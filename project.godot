@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Turret"
+config/name="Lighthouse"
 run/main_scene="res://levels/TestLab.tscn"
 
 [display]

@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://shaders/Water/WaterWaves.shader" type="Shader" id=1]
+[ext_resource path="res://assets/placeholder.png" type="Texture" id=2]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 1 )
+shader_param/water_color = Color( 0.592157, 0.686275, 1, 1 )
+shader_param/surface_level = 0.05
+shader_param/sine_oscillations_1 = 20.0
+shader_param/sine_amplitude_1 = 80.0
+shader_param/sine_speed_1 = 1.0
+shader_param/sine_oscillations_2 = 20.0
+shader_param/sine_amplitude_2 = 100.0
+shader_param/sine_speed_2 = 1.0
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 16, 16 )
+
+[node name="Water" type="Area2D"]
+position = Vector2( 243, 132 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+material = SubResource( 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )

@@ -1,0 +1,135 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://shaders/Water/WaterWaves.shader" type="Shader" id=1]
+[ext_resource path="res://assets/64x64.png" type="Texture" id=3]
+[ext_resource path="res://levels/Camera2D.gd" type="Script" id=4]
+
+[sub_resource type="ConvexPolygonShape2D" id=5]
+points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
+
+[sub_resource type="ConvexPolygonShape2D" id=8]
+points = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64 )
+
+[sub_resource type="TileSet" id=6]
+0/name = "64x64.png 0"
+0/texture = ExtResource( 3 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 64, 64 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 5 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 8 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+0/z_index = 0
+1/name = "64x64.png 1"
+1/texture = ExtResource( 3 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 0, 0, 0, 1 )
+1/region = Rect2( 0, 64, 64, 64 )
+1/tile_mode = 0
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shapes = [  ]
+1/z_index = 0
+
+[sub_resource type="ShaderMaterial" id=7]
+shader = ExtResource( 1 )
+shader_param/water_color = Color( 0.847059, 0.866667, 0.94902, 1 )
+shader_param/surface_level = 0.303
+shader_param/sine_oscillations_1 = 20.0
+shader_param/sine_amplitude_1 = 10.0
+shader_param/sine_speed_1 = 2.0
+shader_param/sine_oscillations_2 = 20.0
+shader_param/sine_amplitude_2 = 100.0
+shader_param/sine_speed_2 = 1.0
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = ExtResource( 1 )
+shader_param/water_color = Color( 0.705882, 0.94902, 0.952941, 1 )
+shader_param/surface_level = 0.648
+shader_param/sine_oscillations_1 = 20.0
+shader_param/sine_amplitude_1 = 21.0
+shader_param/sine_speed_1 = 2.0
+shader_param/sine_oscillations_2 = 20.0
+shader_param/sine_amplitude_2 = 200.0
+shader_param/sine_speed_2 = 1.0
+
+[sub_resource type="ConvexPolygonShape2D" id=4]
+points = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64 )
+
+[sub_resource type="TileSet" id=2]
+0/name = "64x64.png 0"
+0/texture = ExtResource( 3 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 64, 64 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 4 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+0/z_index = 0
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Land" type="Node2D" parent="."]
+
+[node name="Building" type="Node2D" parent="."]
+
+[node name="Lighthouse" type="TileMap" parent="Building"]
+tile_set = SubResource( 6 )
+format = 1
+tile_data = PoolIntArray( -458748, 0, 0, -458747, 0, 0, -458746, 0, 0, -458745, 0, 0, -458744, 0, 0, -458743, 0, 0, -458742, 0, 0, -458741, 0, 0, -393212, 0, 0, -393205, 0, 0, -327676, 0, 0, -327669, 0, 0, -262140, 0, 0, -262133, 0, 0, -196604, 0, 0, -196597, 0, 0, -131068, 0, 0, -131067, 1, 0, -131066, 1, 0, -131065, 1, 0, -131064, 1, 0, -131063, 1, 0, -131062, 1, 0, -131061, 0, 0, -65532, 0, 0, -65525, 0, 0, 4, 0, 0, 11, 0, 0, 65540, 0, 0, 65547, 0, 0, 131076, 0, 0, 131083, 0, 0, 196612, 0, 0, 196613, 1, 0, 196614, 1, 0, 196615, 1, 0, 196616, 1, 0, 196617, 1, 0, 196618, 1, 0, 196619, 0, 0, 262148, 0, 0, 262155, 0, 0, 327684, 0, 0, 327691, 0, 0, 393220, 0, 0, 393227, 0, 0, 458756, 0, 0, 458763, 0, 0, 524292, 0, 0, 524293, 1, 0, 524294, 1, 0, 524295, 1, 0, 524296, 1, 0, 524297, 1, 0, 524298, 1, 0, 524299, 0, 0, 589828, 0, 0, 589835, 0, 0, 655362, 1, 0, 655363, 1, 0, 655364, 0, 0, 655371, 0, 0, 655372, 1, 0, 655373, 1, 0, 720898, 1, 0, 720899, 1, 0, 720900, 0, 0, 720907, 0, 0, 720908, 1, 0, 720909, 1, 0, 786434, 1, 0, 786435, 1, 0, 786436, 0, 0, 786443, 0, 0, 786444, 1, 0, 786445, 1, 0, 851968, 1, 0, 851969, 1, 0, 851970, 1, 0, 851971, 1, 0, 851972, 0, 0, 851973, 0, 0, 851974, 0, 0, 851975, 0, 0, 851976, 0, 0, 851977, 0, 0, 851978, 0, 0, 851979, 0, 0, 851980, 1, 0, 851981, 1, 0, 851982, 1, 0, 851983, 1, 0 )
+
+[node name="Sea" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Sea"]
+material = SubResource( 7 )
+position = Vector2( 742.041, 727.269 )
+scale = Vector2( 87.789, 5.5332 )
+texture = ExtResource( 3 )
+
+[node name="YSort" type="YSort" parent="."]
+
+[node name="TileMap" type="TileMap" parent="YSort"]
+show_behind_parent = true
+material = SubResource( 3 )
+tile_set = SubResource( 2 )
+cell_quadrant_size = 32
+centered_textures = true
+format = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 511.217, 299.914 )
+current = true
+smoothing_enabled = true
+script = ExtResource( 4 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+show_behind_parent = true
+margin_left = -3388.96
+margin_top = -2860.59
+margin_right = 4353.04
+margin_bottom = 4881.41
+color = Color( 0.462745, 0.541176, 0.470588, 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
