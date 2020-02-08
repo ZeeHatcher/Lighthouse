@@ -6,7 +6,7 @@ onready var attack_timer := $AttackTimer
 onready var move_timer := $RandomMoveTimer
 onready var light := $Light2D
 onready var player := get_tree().get_root().get_node("TestLab/Player")
-onready var fly_projectile := load("res://fly_projectile.tscn")
+onready var fly_projectile := load("res://entities/Enemy/Fly/Fly_projectile.tscn")
 
 # Initiating values
 var velocity := Vector2()
@@ -56,7 +56,7 @@ func move_towards_player() -> void:
 func random_move() -> void:
 	if will_move:
 		will_move = false                    	# can move again only  #
-		move_timer.wait_time = randi() % 2   	# after timer runs out #
+		move_timer.wait_time = randi() % 2 + 0.1  	# after timer runs out #
 		move_timer.start()                   	#  (rand time 0..2 )   #
 		
 		var rand_x = randi() % 20 - 10       	# generate random int #

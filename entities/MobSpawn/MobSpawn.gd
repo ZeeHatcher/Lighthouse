@@ -4,7 +4,7 @@ onready var level := get_tree().get_root().get_node("TestLab")
 onready var viewport := level.get_viewport()
 onready var paths := [$LeftPath, $RightPath]
 onready var timer := $Timer
-onready var scene_enemy := preload("res://entities/Enemy/Enemy.tscn")
+onready var scene_enemy := preload("res://entities/Enemy/Fly/Fly.tscn")
 
 func _on_Timer_timeout():
 	var side := randi() % 2
@@ -15,4 +15,3 @@ func _on_Timer_timeout():
 	var enemy = scene_enemy.instance()
 	level.add_child(enemy)
 	enemy.global_position = spawn_point.global_position
-	enemy.face(side)

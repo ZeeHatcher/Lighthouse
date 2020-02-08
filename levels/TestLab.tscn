@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://entities/Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://entities/MobSpawn/MobSpawn.tscn" type="PackedScene" id=2]
+[ext_resource path="res://entities/Stair/Stair.tscn" type="PackedScene" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 512, 16 )
@@ -28,6 +29,8 @@ __meta__ = {
 shape = SubResource( 1 )
 
 [node name="ColorRect" type="ColorRect" parent="Platform"]
+anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -512.0
@@ -39,8 +42,23 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 516.065, 551.486 )
-
 [node name="MobSpawn" parent="." instance=ExtResource( 2 )]
 position = Vector2( 0, 40 )
+
+[node name="Stair0" parent="." instance=ExtResource( 3 )]
+position = Vector2( 512, 544 )
+
+[node name="Stair1" parent="." instance=ExtResource( 3 )]
+position = Vector2( 512, 448 )
+level = 1
+
+[node name="Stair2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 512, 352 )
+level = 2
+
+[node name="Stair3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 512, 256 )
+level = 3
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 516.065, 551.486 )
