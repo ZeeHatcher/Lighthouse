@@ -4,6 +4,8 @@ export (int) var level := 0
 
 onready var scene_tree := get_tree()
 
+onready var steps = get_node("../stair")
+
 func _ready() -> void:
 	add_to_group("stairs")
 	
@@ -22,3 +24,5 @@ func warp(entity: KinematicBody2D, direction: int) -> void:
 func _on_Player_stair_entered(player: KinematicBody2D, direction: int) -> void:
 	if (overlaps_body(player)):
 		warp(player, direction)
+	steps.play()
+	
