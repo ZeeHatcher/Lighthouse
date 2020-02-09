@@ -30,11 +30,12 @@ margin_right = 1025.0
 margin_bottom = 589.0
 color = Color( 0.247059, 0.247059, 0.247059, 1 )
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color( 0.564706, 0.564706, 0.564706, 1 )
+color = Color( 0.682353, 0.682353, 0.682353, 1 )
 
 [node name="Platform" type="StaticBody2D" parent="."]
 position = Vector2( 512, 584 )
@@ -80,6 +81,11 @@ level = 3
 [node name="stair" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 9 )
 
+[node name="bg" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 10 )
+volume_db = -25.0
+autoplay = true
+
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 516.065, 551.486 )
 
@@ -100,6 +106,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 6 )
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -133,7 +140,3 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 10 )
-autoplay = true
