@@ -6,6 +6,9 @@ onready var paths := [$LeftPath, $RightPath]
 onready var timer := $Timer
 onready var scene_enemy := preload("res://entities/Enemy/Fly/Fly.tscn")
 
+func _ready():
+	pass
+
 func _on_Timer_timeout():
 	var side := randi() % 2
 	var spawn_point : PathFollow2D = paths[side].get_node("PathFollow2D")

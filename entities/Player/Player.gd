@@ -19,6 +19,7 @@ func _physics_process(_delta: float) -> void:
 	aim()
 	handle_shoot()
 	velocity = move_and_slide(velocity)
+	
 
 func handle_move_input() -> void:
 	velocity = Vector2()
