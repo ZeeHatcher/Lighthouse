@@ -10,6 +10,9 @@ extents = Vector2( 512, 16 )
 
 [node name="TestLab" type="Node2D"]
 
+[node name="Beacon" parent="." instance=ExtResource( 4 )]
+position = Vector2( 512, 303 )
+
 [node name="Background" type="ColorRect" parent="."]
 margin_right = 1025.0
 margin_bottom = 589.0
@@ -17,9 +20,6 @@ color = Color( 0.247059, 0.247059, 0.247059, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Beacon" parent="Background" instance=ExtResource( 4 )]
-position = Vector2( 512, 303 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color( 0.0313726, 0.0313726, 0.0313726, 1 )
