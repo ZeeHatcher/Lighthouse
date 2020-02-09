@@ -20,14 +20,3 @@ texture = ExtResource( 1 )
 shadow_enabled = true
 shadow_filter = 2
 shadow_filter_smooth = 10.0
-
-[node name="ColorRect" type="ColorRect" parent="."]
-margin_left = -626.0
-margin_top = -375.0
-margin_right = 698.0
-margin_bottom = 401.0
-color = Color( 0.298039, 0.298039, 0.298039, 1 )
-__meta__ = {
-"_edit_lock_": true,
-"_edit_use_anchors_": false
-}

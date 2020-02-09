@@ -40,11 +40,11 @@ func _physics_process(delta) -> void:
 func face_direction() -> void:
 	if player.global_position > global_position:
 		$Sprite.flip_h = true
-		$Position2D.position.x = 15
+		$Position2D.position.x = 16
 		light.position.x = -6
 	else:
 		$Sprite.flip_h = false
-		$Position2D.position.x = -15
+		$Position2D.position.x = -16
 		light.position.x = 6
 
 # moves towards the player
