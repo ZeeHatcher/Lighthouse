@@ -1,22 +1,41 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://entities/Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://entities/MobSpawn/MobSpawn.tscn" type="PackedScene" id=2]
+[ext_resource path="res://entities/Stair/Stair.tscn" type="PackedScene" id=3]
+[ext_resource path="res://entities/Beacon/Beacon.tscn" type="PackedScene" id=4]
+[ext_resource path="res://levels/TestLab.gd" type="Script" id=5]
+[ext_resource path="res://levels/Control.gd" type="Script" id=6]
+[ext_resource path="res://levels/Camera2D.gd" type="Script" id=7]
+[ext_resource path="res://fonts/JetBrainsMono-Regular.ttf" type="DynamicFontData" id=8]
+[ext_resource path="res://assets/stairs.wav" type="AudioStream" id=9]
+[ext_resource path="res://assets/bg.wav" type="AudioStream" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 512, 16 )
 
+[sub_resource type="DynamicFont" id=2]
+size = 50
+font_data = ExtResource( 8 )
+
 [node name="TestLab" type="Node2D"]
+position = Vector2( 2.51758, 0 )
+script = ExtResource( 5 )
+
+[node name="Beacon" parent="." instance=ExtResource( 4 )]
+position = Vector2( 512, 303 )
 
 [node name="Background" type="ColorRect" parent="."]
 margin_right = 1025.0
 margin_bottom = 589.0
 color = Color( 0.247059, 0.247059, 0.247059, 1 )
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color( 0.682353, 0.682353, 0.682353, 1 )
 
 [node name="Platform" type="StaticBody2D" parent="."]
 position = Vector2( 512, 584 )
@@ -28,19 +47,96 @@ __meta__ = {
 shape = SubResource( 1 )
 
 [node name="ColorRect" type="ColorRect" parent="Platform"]
+anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -512.0
 margin_top = -16.0
 margin_right = 512.0
 margin_bottom = 16.0
-color = Color( 0.0862745, 0.0862745, 0.0862745, 1 )
+color = Color( 0.3125, 0.3125, 0.3125, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="MobSpawn" parent="." instance=ExtResource( 2 )]
+position = Vector2( 0, 40 )
+
+[node name="Stair0" parent="." instance=ExtResource( 3 )]
+position = Vector2( 512, 544 )
+
+[node name="Stair1" parent="." instance=ExtResource( 3 )]
+position = Vector2( 512, 448 )
+level = 1
+
+[node name="Stair2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 512, 352 )
+level = 2
+
+[node name="Stair3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 512, 256 )
+level = 3
+
+[node name="stair" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 9 )
+
+[node name="bg" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 10 )
+volume_db = -25.0
+autoplay = true
+
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 516.065, 551.486 )
 
-[node name="MobSpawn" parent="." instance=ExtResource( 2 )]
-position = Vector2( 0, 40 )
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 500.666, 303.175 )
+current = true
+limit_smoothed = true
+smoothing_enabled = true
+script = ExtResource( 7 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+pause_mode = 2
+follow_viewport_enable = true
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -344.0
+margin_top = -89.0
+margin_right = 342.0
+margin_bottom = 88.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -345.0
+margin_top = -62.5
+margin_right = 345.0
+margin_bottom = 62.5
+custom_fonts/font = SubResource( 2 )
+text = "Paused
+Press Space to unpause"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

@@ -1,10 +1,10 @@
 extends KinematicBody2D
 
-onready var player = get_tree().get_root().get_node("TestLab/Player")
+export var speed = 500
 
 var velocity = Vector2(speed, 0)
 
-export var speed = 500
+onready var player = get_tree().get_root().get_node("TestLab/Player")
 
 func _physics_process(delta):
 	var collision =  move_and_collide(velocity * delta)    	 # move

@@ -6,7 +6,7 @@ onready var attack_timer := $AttackTimer
 onready var move_timer := $RandomMoveTimer
 onready var light := $Light2D
 onready var player := get_tree().get_root().get_node("TestLab/Player")
-onready var fly_projectile := load("res://fly_projectile.tscn")
+onready var fly_projectile := load("res://entities/Enemy/Fly/Fly_projectile.tscn")
 
 # Initiating values
 var velocity := Vector2()
@@ -40,11 +40,11 @@ func _physics_process(delta) -> void:
 func face_direction() -> void:
 	if player.global_position > global_position:
 		$Sprite.flip_h = true
-		$Position2D.position.x = 15
+		$Position2D.position.x = 16
 		light.position.x = -6
 	else:
 		$Sprite.flip_h = false
-		$Position2D.position.x = -15
+		$Position2D.position.x = -16
 		light.position.x = 6
 
 # moves towards the player
@@ -56,7 +56,7 @@ func move_towards_player() -> void:
 func random_move() -> void:
 	if will_move:
 		will_move = false                    	# can move again only  #
-		move_timer.wait_time = randi() % 2   	# after timer runs out #
+		move_timer.wait_time = randi() % 2 + 0.1  	# after timer runs out #
 		move_timer.start()                   	#  (rand time 0..2 )   #
 		
 		var rand_x = randi() % 20 - 10       	# generate random int #
