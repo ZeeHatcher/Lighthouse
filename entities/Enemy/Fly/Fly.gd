@@ -1,88 +1,56 @@
-extends KinematicBody2D
+extends Enemy
 
-# References
-onready var cooldown_timer := $AttackCooldownTimer
-onready var attack_timer := $AttackTimer
-onready var move_timer := $RandomMoveTimer
-onready var light := $Light2D
-onready var player := get_tree().get_root().get_node("TestLab/Player")
-onready var fly_projectile := load("res://entities/Enemy/Fly/Fly_projectile.tscn")
+export var attack_range := 0		# distance when enemy stops getting closer
+export var attack_charge_time = 1		# attack rate in seconds
 
-# Initiating values
-var velocity := Vector2()
-var will_move := true
 var can_attack := true
 
-# Entity variables
-export var follow_distance := 300           # distance when enemy stops getting closer
-export var speed := 100                     # movement speed when approching player
-export var attack_charge_time = 1           # attack rate in seconds
+onready var bulb := $Light2D
+onready var tail := $Tail
+onready var timer_attack_cooldown := $AttackCooldownTimer
+onready var timer_attack_charge := $AttackChargeTimer
+onready var timer_move := $RandomMoveTimer
 
+func _attack(delta: float) -> void:
+	if (can_attack && global_position.distance_to(ENTITIES.lighthouse.global_position) < attack_range):
+		bulb.visible = true
+		timer_attack_charge.start()
+		can_attack = false
 
-func _ready() -> void:
-	add_to_group("enemies")
-	attack_timer.wait_time = attack_charge_time
+func _flip() -> void:
+	match side:
+		Side.LEFT:
+			sprite.flip_h = false
+			
+		Side.RIGHT:
+			sprite.flip_h = true
 
-func _physics_process(delta) -> void:
-	face_direction()
-	
-	var distance_to_player = player.global_position.distance_to(global_position)
-	if distance_to_player > follow_distance:
-		move_towards_player()
-	else:
-		random_move()
-		attack()
-		
-	move_and_collide(velocity * delta, false)
+func _on_spawn() -> void:
+	pass
 
+func _move(delta: float) -> void:
+	match side:
+		Side.LEFT:
+			velocity = Vector2(speed, 0)
+			
+		Side.RIGHT:
+			velocity = Vector2(-speed, 0)
 
-# face left or right
-func face_direction() -> void:
-	if player.global_position > global_position:
-		$Sprite.flip_h = true
-		$Position2D.position.x = 16
-		light.position.x = -6
-	else:
-		$Sprite.flip_h = false
-		$Position2D.position.x = -16
-		light.position.x = 6
-
-# moves towards the player
 func move_towards_player() -> void:
-	var direction = (player.global_position - global_position).normalized()
+	var direction = (ENTITIES.lighthouse.global_position - global_position).normalized()
 	velocity = direction * speed
-
-# move a little on random
-func random_move() -> void:
-	if will_move:
-		will_move = false                    	# can move again only  #
-		move_timer.wait_time = randi() % 2 + 0.1  	# after timer runs out #
-		move_timer.start()                   	#  (rand time 0..2 )   #
-		
-		var rand_x = randi() % 20 - 10       	# generate random int #
-		var rand_y = randi() % 20 - 10       	# between -10 and 9   # 
-		
-		var direction = Vector2(rand_x, rand_y).normalized()   	 # move by 1/10 #
-		velocity = direction * speed / 10                      	 # of its speed #
-
-# charges an attack and shoots after the charge
-func attack() -> void:
-	if can_attack:                	# attacks only if cooldown is over
-		can_attack = false        	# no spam attacks until cooldown
-		attack_timer.start()      	# resets cooldown timer
-		light.visible = true      	# show charging light 
-
-# shoots projectile after charging
-func _on_AttackTimer_timeout():
-	cooldown_timer.start()
-	var projectile = fly_projectile.instance()
-	get_tree().get_root().get_node("TestLab").add_child(projectile)
-	projectile.position = $Position2D.global_position
-	projectile.point()
-	light.visible = false
-
-func _on_RandomMoveTimer_timeout():
-	will_move = true
 
 func _on_AttackCooldownTimer_timeout():
 	can_attack = true
+
+func _on_AttackChargeTimer_timeout():
+	var projectile = SCENES.projectile_fly.instance()
+	ENTITIES.level.add_child(projectile)
+	projectile.position = tail.global_position
+	projectile.point()
+	bulb.visible = false
+
+	timer_attack_cooldown.start()
+
+func _on_RandomMoveTimer_timeout():
+	pass

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/fly_projectile.png-6e081bc2fa641e4eb72c5462f28a657a.stex"
+path="res://.import/Fly_projectile.png-15358a0bde31a45013877ccb6696c165.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/Enemy/Fly/fly_projectile.png"
-dest_files=[ "res://.import/fly_projectile.png-6e081bc2fa641e4eb72c5462f28a657a.stex" ]
+source_file="res://entities/Enemy/Fly/Fly_projectile.png"
+dest_files=[ "res://.import/Fly_projectile.png-15358a0bde31a45013877ccb6696c165.stex" ]
 
 [params]
 

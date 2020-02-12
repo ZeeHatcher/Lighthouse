@@ -1,7 +1,8 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://shaders/Water/WaterWaves.shader" type="Shader" id=1]
-[ext_resource path="res://assets/placeholder.png" type="Texture" id=2]
+[ext_resource path="res://assets/images/placeholder.png" type="Texture" id=2]
+
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 1 )
