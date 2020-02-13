@@ -34,15 +34,17 @@ stream = ExtResource( 10 )
 position = Vector2( 512, 303 )
 
 [node name="Background" type="ColorRect" parent="."]
-margin_right = 1025.0
-margin_bottom = 589.0
+margin_left = -116.0
+margin_top = -92.0
+margin_right = 1142.0
+margin_bottom = 681.0
 color = Color( 0.247059, 0.247059, 0.247059, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color( 0.498039, 0.498039, 0.498039, 1 )
+color = Color( 0.490196, 0.490196, 0.490196, 1 )
 
 [node name="Platform" type="StaticBody2D" parent="."]
 position = Vector2( 512, 584 )
@@ -81,12 +83,8 @@ level = 1
 position = Vector2( 512, 352 )
 level = 2
 
-[node name="Stair3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 512, 256 )
-level = 3
-
 [node name="Lighthouse" parent="." instance=ExtResource( 11 )]
-position = Vector2( 509.482, 376 )
+position = Vector2( 509.482, 568 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 516.065, 551.486 )
@@ -94,11 +92,13 @@ position = Vector2( 516.065, 551.486 )
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2( -15.399, -248.311 )
 current = true
+limit_left = -1000
 limit_top = 0
+limit_right = 2000
+limit_bottom = 0
 limit_smoothed = true
 smoothing_enabled = true
 script = ExtResource( 7 )
-zoom_size = Vector2( 1, 1 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 pause_mode = 2

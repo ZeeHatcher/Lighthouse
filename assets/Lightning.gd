@@ -5,7 +5,7 @@ onready var level := get_tree().get_root().get_node("TestLab")
 onready var area : Area2D = $Area2D
 onready var scene_lightning = load("res://assets/Lightning.tscn")
 
-export (int) var max_chain_targets := 100
+export (int) var max_chain_targets := 2
 export (int) var max_chain_length := 3
 export (int) var min_chain_radius := 100
 
@@ -40,7 +40,6 @@ func _physics_process(delta):
 	
 	for i in range(target_enemies.size()):
 			if chained_length < max_chain_length:
-				chained_length += 1
 				
 				var lightning : Line2D = scene_lightning.instance()
 				level.add_child(lightning)
@@ -48,7 +47,7 @@ func _physics_process(delta):
 				#lightning.look_at(overlap_objects[i].global_position)   for rotating light only
 				lightning.set_point_position(1, target_enemies[i].global_position - area.global_position)
 				lightning.area.position = target_enemies[i].global_position - area.global_position
-				lightning.chained_length = chained_length
+				lightning.chained_length = chained_length + 1
 				
 				target_enemies[i].queue_free()
 				

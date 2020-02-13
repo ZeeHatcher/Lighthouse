@@ -44,10 +44,10 @@ func _on_AttackCooldownTimer_timeout():
 	can_attack = true
 
 func _on_AttackChargeTimer_timeout():
-	var projectile = SCENES.projectile_fly.instance()
+	var projectile = SCENES.projectile_insect.instance()
 	ENTITIES.level.add_child(projectile)
 	projectile.position = tail.global_position
-	projectile.point()
+	projectile.point_to(ENTITIES.lighthouse.global_position)
 	bulb.visible = false
 
 	timer_attack_cooldown.start()

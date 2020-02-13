@@ -8,3 +8,4 @@ func _ready():
 func _on_Lighthouse_body_entered(body):
 	if body.is_in_group("projectiles"):
 		body.visible = false
+		body.queue_free()

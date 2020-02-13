@@ -1,7 +1,4 @@
 extends Camera2D
-
-export var zoom_size = Vector2(1.5,1.5)
-
-func _ready():
-	set_zoom(zoom_size)
-
+	
+func _process(delta: float):
+	global_position.x = get_global_mouse_position().x

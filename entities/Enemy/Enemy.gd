@@ -3,11 +3,11 @@ extends KinematicBody2D
 
 enum Side { LEFT, RIGHT }
 
-export (int) var speed := 0
+export (int) var speed = 0
 
 var side : int = Side.LEFT setget set_side
-var velocity := Vector2(speed, 0)
 
+onready var velocity := Vector2(speed, 0)
 onready var hit_box := $CollisionShape2D
 onready var sprite := $Sprite
 onready var occluder := $LightOccluder2D
@@ -38,3 +38,6 @@ func _on_spawn() -> void:
 
 func _move(delta: float) -> void:
 	pass
+
+func _on_VisibilityNotifier2D_screen_exited():
+	queue_free()
