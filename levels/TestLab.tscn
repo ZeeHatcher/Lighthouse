@@ -13,7 +13,7 @@
 [ext_resource path="res://entities/Lighthouse/Lighthouse.tscn" type="PackedScene" id=11]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 512, 16 )
+extents = Vector2( 1158.48, 16 )
 
 [sub_resource type="DynamicFont" id=2]
 size = 50
@@ -34,9 +34,9 @@ stream = ExtResource( 10 )
 position = Vector2( 512, 303 )
 
 [node name="Background" type="ColorRect" parent="."]
-margin_left = -116.0
+margin_left = -1317.0
 margin_top = -92.0
-margin_right = 1142.0
+margin_right = 2344.0
 margin_bottom = 681.0
 color = Color( 0.247059, 0.247059, 0.247059, 1 )
 __meta__ = {
@@ -60,9 +60,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -512.0
+margin_left = -1174.0
 margin_top = -16.0
-margin_right = 512.0
+margin_right = 1175.0
 margin_bottom = 16.0
 color = Color( 0.3125, 0.3125, 0.3125, 1 )
 __meta__ = {
@@ -92,9 +92,9 @@ position = Vector2( 516.065, 551.486 )
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2( -15.399, -248.311 )
 current = true
-limit_left = -1000
+limit_left = -250
 limit_top = 0
-limit_right = 2000
+limit_right = 1250
 limit_bottom = 0
 limit_smoothed = true
 smoothing_enabled = true
