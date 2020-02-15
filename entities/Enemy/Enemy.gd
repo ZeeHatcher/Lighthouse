@@ -3,6 +3,10 @@ extends KinematicBody2D
 
 enum Side { LEFT, RIGHT }
 
+onready var scene_tree := get_tree()
+onready var root := scene_tree.get_root()
+onready var level := root.get_node("TestLab")
+
 export (int) var speed = 0
 
 var side : int = Side.LEFT setget set_side
@@ -18,7 +22,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	_move(delta)
-	_attack(delta)
+	#_attack(delta)
 	
 	var _collision = move_and_collide(velocity * delta, false)
 

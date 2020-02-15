@@ -12,7 +12,7 @@ onready var timer_attack_charge := $AttackChargeTimer
 onready var timer_move := $RandomMoveTimer
 
 func _attack(delta: float) -> void:
-	if (can_attack && global_position.distance_to(ENTITIES.lighthouse.global_position) < attack_range):
+	if (can_attack && global_position.distance_to(level.lighthouse.global_position) < attack_range):
 		bulb.visible = true
 		timer_attack_charge.start()
 		can_attack = false
@@ -37,7 +37,7 @@ func _move(delta: float) -> void:
 			velocity = Vector2(-speed, 0)
 
 func move_towards_player() -> void:
-	var direction = (ENTITIES.lighthouse.global_position - global_position).normalized()
+	var direction = (level.lighthouse.global_position - global_position).normalized()
 	velocity = direction * speed
 
 func _on_AttackCooldownTimer_timeout():
@@ -45,9 +45,9 @@ func _on_AttackCooldownTimer_timeout():
 
 func _on_AttackChargeTimer_timeout():
 	var projectile = SCENES.projectile_insect.instance()
-	ENTITIES.level.add_child(projectile)
+	level.add_child(projectile)
 	projectile.position = tail.global_position
-	projectile.point_to(ENTITIES.lighthouse.global_position)
+	projectile.point_to(level.lighthouse.global_position)
 	bulb.visible = false
 
 	timer_attack_cooldown.start()

@@ -1,10 +1,13 @@
 extends Node2D
 
-onready var level := ENTITIES.level
+onready var scene_tree := get_tree()
+onready var root := scene_tree.get_root()
+onready var level := root.get_node("TestLab")
 onready var viewport := level.get_viewport()
 onready var paths := [$LeftPath, $RightPath]
 onready var timer := $Timer
-onready var scene_enemy := SCENES.enemy_fly
+#onready var scene_enemy := SCENES.enemy_fly
+onready var scene_enemy := SCENES.enemy_swarm
 
 func _ready():
 	pass

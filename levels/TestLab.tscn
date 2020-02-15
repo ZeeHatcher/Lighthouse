@@ -90,13 +90,12 @@ position = Vector2( 509.482, 568 )
 position = Vector2( 516.065, 551.486 )
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
-position = Vector2( -15.399, -248.311 )
+position = Vector2( 0, -197.924 )
 current = true
 limit_left = -250
-limit_top = 0
+limit_top = 100
 limit_right = 1250
 limit_bottom = 1000
-limit_smoothed = true
 smoothing_enabled = true
 script = ExtResource( 7 )
 
