@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Fly_projectile.png-e114a024e64bbb510fd2a0c0878aeedd.stex"
+path="res://.import/minifly.png-1195709bda1a8efeded768276d73f7ad.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Fly_projectile.png"
-dest_files=[ "res://.import/Fly_projectile.png-e114a024e64bbb510fd2a0c0878aeedd.stex" ]
+source_file="res://assets/images/minifly.png"
+dest_files=[ "res://.import/minifly.png-1195709bda1a8efeded768276d73f7ad.stex" ]
 
 [params]
 

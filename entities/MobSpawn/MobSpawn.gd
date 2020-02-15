@@ -6,8 +6,8 @@ onready var level := root.get_node("TestLab")
 onready var viewport := level.get_viewport()
 onready var paths := [$LeftPath, $RightPath]
 onready var timer := $Timer
-#onready var scene_enemy := SCENES.enemy_fly
-onready var scene_enemy := SCENES.enemy_swarm
+onready var scene_enemy := SCENES.enemy_fly
+#onready var scene_enemy := SCENES.enemy_swarm
 
 func _ready():
 	pass
