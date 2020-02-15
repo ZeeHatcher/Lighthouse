@@ -7,6 +7,7 @@ export (int) var speed_move := 200
 var velocity := Vector2()
 
 onready var gun := $Gun
+onready var sprite := $AnimatedSprite
 
 func _ready() -> void:
 	var stairs := get_tree().get_nodes_in_group("stairs")
@@ -26,9 +27,15 @@ func handle_move_input() -> void:
 	
 	if (Input.is_action_pressed("move_right")):
 		velocity.x += 1
-	
-	if (Input.is_action_pressed("move_left")):
+		sprite.flip_h = false
+		sprite.play("run")
+	elif (Input.is_action_pressed("move_left")):
 		velocity.x -= 1
+		sprite.flip_h = true
+		sprite.play("run")
+	else:
+		velocity.x = 0
+		sprite.play("idle")
 		
 	if (Input.is_action_just_pressed("move_down")):
 		emit_signal("stair_entered", self, -1)
