@@ -22,7 +22,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	_move(delta)
-	#_attack(delta)
+	_attack(delta)
 	
 	var _collision = move_and_collide(velocity * delta, false)
 

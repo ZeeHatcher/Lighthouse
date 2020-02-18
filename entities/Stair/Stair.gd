@@ -3,7 +3,7 @@ extends Area2D
 export (int) var level := 0
 
 onready var scene_tree := get_tree()
-onready var steps = get_node("../stair")
+# onready var steps = get_node("../stair")
 
 func _ready() -> void:
 	add_to_group("stairs")
@@ -18,7 +18,7 @@ func warp(entity: KinematicBody2D, direction: int) -> void:
 	for stair in stairs:
 		if (stair.level == level_next):
 			entity.global_position = stair.global_position
-			steps.play()
+			# steps.play()
 			break
 
 func _on_Player_stair_entered(player: KinematicBody2D, direction: int) -> void:

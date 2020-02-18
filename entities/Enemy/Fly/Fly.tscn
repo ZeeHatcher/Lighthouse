@@ -4,7 +4,6 @@
 [ext_resource path="res://assets/images/fly.png" type="Texture" id=2]
 [ext_resource path="res://entities/Enemy/Fly/Fly.gd" type="Script" id=3]
 
-
 [sub_resource type="OccluderPolygon2D" id=1]
 
 [sub_resource type="CapsuleShape2D" id=2]
