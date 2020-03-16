@@ -1,6 +1,0 @@
-[submodule "Lighthouse"]
-	path = Lighthouse
-	url = https://github.com/ZeeHatcher/Lighthouse
-[submodule "bulletTime"]
-	path = bulletTime
-	url = https://github.com/ZeeHatcher/bulletTime

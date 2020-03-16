@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Walls.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Explosive.tscn" type="PackedScene" id=3]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="StaticBody2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0.0665607, 12.0926 )
+scale = Vector2( 1, 0.4 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( -0.368057, -4.78467 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+
+[node name="StaticBody2D2" parent="." instance=ExtResource( 1 )]
+position = Vector2( -496.399, -1.10803 )
+scale = Vector2( 0.937745, 19.3701 )
+
+[node name="StaticBody2D3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 511.911, -6.64819 )
+scale = Vector2( 0.937745, 19.3701 )
+
+[node name="StaticBody2D4" parent="." instance=ExtResource( 1 )]
+position = Vector2( -88.6426, 175.069 )
+scale = Vector2( 624.352, -1.0692 )
+
+[node name="Explosive" parent="." instance=ExtResource( 3 )]
+position = Vector2( -130.817, 138.785 )
