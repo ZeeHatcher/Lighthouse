@@ -32,7 +32,8 @@ func get_input():
 		velocity.x = lerp(velocity.x, max_speed_left, 0.5)
 	if Input.is_action_pressed("right"):
 		velocity.x = lerp(velocity.x, max_speed_right, 0.5)
-	if is_on_floor() and Input.is_action_just_pressed("jump"):
+	print($RayCast2D.get_collider())
+	if $RayCast2D.get_collider() and Input.is_action_just_pressed("jump"):
 		velocity.y = -15000
 		if velocity.x < 0:
 			max_speed_left -= 2500
@@ -103,4 +104,3 @@ func handle_max_speed_direction():
 
 func _on_InputDisableTimer_timeout():
 	disable_input = false
-	print("enabled")

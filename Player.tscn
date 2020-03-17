@@ -26,6 +26,9 @@ __meta__ = {
 position = Vector2( 0, -102.308 )
 current = true
 smoothing_enabled = true
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="FloorTimer" type="Timer" parent="."]
 wait_time = 0.2
@@ -34,5 +37,9 @@ one_shot = true
 [node name="InputDisableTimer" type="Timer" parent="."]
 wait_time = 0.1
 one_shot = true
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+enabled = true
+cast_to = Vector2( 0, 15 )
 [connection signal="timeout" from="FloorTimer" to="." method="_on_FloorTimer_timeout"]
 [connection signal="timeout" from="InputDisableTimer" to="." method="_on_InputDisableTimer_timeout"]
