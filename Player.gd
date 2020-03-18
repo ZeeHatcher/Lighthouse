@@ -106,3 +106,7 @@ func handle_max_speed_direction():
 
 func _on_InputDisableTimer_timeout():
 	disable_input = false
+
+
+func _on_Area2D_body_entered(body):
+	get_node("../Player").queue_free()
