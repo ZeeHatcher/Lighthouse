@@ -32,8 +32,7 @@ func get_input():
 		velocity.x = lerp(velocity.x, max_speed_left, 0.5)
 	if Input.is_action_pressed("right"):
 		velocity.x = lerp(velocity.x, max_speed_right, 0.5)
-	print($RayCast2D.get_collider())
-	if $RayCast2D.get_collider() and Input.is_action_just_pressed("jump"):
+	if ($RayCast2D.get_collider() or is_on_floor()) and Input.is_action_just_pressed("jump"):
 		velocity.y = -15000
 		if velocity.x < 0:
 			max_speed_left -= 2500
@@ -53,14 +52,18 @@ func apply_friction():
 
 
 func apply_gravity():
+	if is_on_floor() && velocity.y > 0:
+		velocity.y = 0
 	velocity.y += 1000
 
 
 func apply_slope():
-	var collider = get_slide_collision(max(0, get_slide_count()-1))
-	
+	var collider = null
+	for i in range(get_slide_count() - 1):
+		collider = get_slide_collision(i)
+		
 	if collider:
-		if collider.normal != Vector2(0,-1) and $InputDisableTimer.time_left == 0:
+		if collider.normal != Vector2(-1,0) and collider.normal != Vector2(0,-1) and $InputDisableTimer.time_left == 0:
 			velocity.y = -(abs(velocity.x)*1.2 + 1000)
 			velocity.x = 0
 			max_speed_left = -5000
@@ -72,9 +75,9 @@ func apply_slope():
 func propel(body_entered, detecting_area):
 	var direction = position - detecting_area.position
 	velocity = direction*2000
-	if velocity.x < 0:
+	if velocity.x < -100:
 		max_speed_left = velocity.x
-	elif velocity.x > 0:
+	elif velocity.x > 100:
 		max_speed_right = velocity.x
 	disable_input = true
 	$InputDisableTimer.start()
@@ -91,14 +94,13 @@ func is_on_floor_for_too_long():
 func _on_FloorTimer_timeout():
 	max_speed_left = -5000
 	max_speed_right = 5000
-	velocity.y = 0
 	floor_too_long = true
 
 
 func handle_max_speed_direction():
-	if velocity.x < 0:
+	if velocity.x < -10:
 		max_speed_right = 5000
-	elif velocity.x > 0:
+	elif velocity.x > 10:
 		max_speed_left = -5000
 
 
