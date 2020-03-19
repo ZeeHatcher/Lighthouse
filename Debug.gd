@@ -9,6 +9,7 @@ func _ready():
 	$VBoxContainer/MaxV.text = str(player.max_speed_left) + ", " + str(player.max_speed_right)
 	$VBoxContainer/FrictionV.text = str(player.friction_strength)
 	$VBoxContainer/ExploV.text = "To be added"
+	$VBoxContainer/PositionR.text = str(player.position)
 
 func _process(_delta):
 	$VBoxContainer/VelocityV.text = str(player.velocity)
@@ -29,3 +30,7 @@ func _input(event):
 #		player.explosion_strength = int($VBoxContainer/ExploV.text)
 		
 
+func _on_Button_pressed():
+	var cords = $VBoxContainer/PositionR.text
+	cords = str2var("Vector2" + cords) as Vector2
+	player.position = cords
