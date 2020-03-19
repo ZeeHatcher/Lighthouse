@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://32x32.png" type="Texture" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Glass.tscn" type="PackedScene" id=6]
 [ext_resource path="res://ConveyerBelt.tscn" type="PackedScene" id=7]
 [ext_resource path="res://MainMenuSelectionFont.tres" type="DynamicFont" id=8]
+[ext_resource path="res://speed-sign.png" type="Texture" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 15.99, 16.0273 )
@@ -896,4 +897,8 @@ text = "01"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="speed-sign" type="Sprite" parent="."]
+position = Vector2( 3426.52, 467.568 )
+texture = ExtResource( 9 )
 [connection signal="body_entered" from="Details/Door/Area2D" to="Player" method="_on_Area2D_body_entered"]
