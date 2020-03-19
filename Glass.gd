@@ -18,5 +18,5 @@ func _ready():
 
 func _on_Glass_body_entered(body):
 	if body.get_class() == "KinematicBody2D":
-		if body.velocity.x > 10000:
+		if body.velocity.x > 20000:
 			queue_free()

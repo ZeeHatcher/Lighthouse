@@ -27,6 +27,7 @@ func _input(event):
 		player.jump_height = int($VBoxContainer/JumpV.text)
 		player.gravity_strength = int($VBoxContainer/GravityV.text)
 		player.friction_strength = float($VBoxContainer/FrictionV.text)
+		$VBoxContainer/MaxV.text = str(player.max_speed_left) + ", " + str(player.max_speed_right)
 #		player.explosion_strength = int($VBoxContainer/ExploV.text)
 		
 
