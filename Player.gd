@@ -2,20 +2,17 @@ extends KinematicBody2D
 
 export (int) var max_speed_left := -5000
 export (int) var max_speed_right := 5000
+export (float) var friction_strength := 0.9
+export (int) var gravity_strength := 1000
+export (int) var jump_height := -15000
 
 var velocity := Vector2()
 var disable_input := false
 var floor_too_long := true
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-func _process(delta):
+func _process(_delta):
 	if disable_input == false:
 		get_input()
-
 
 func _physics_process(delta):
 	apply_gravity()
@@ -26,35 +23,32 @@ func _physics_process(delta):
 	
 	move_and_slide(velocity*delta, Vector2.UP)
 
-
 func get_input():
 	if Input.is_action_pressed("left"):
 		velocity.x = lerp(velocity.x, max_speed_left, 0.5)
 	if Input.is_action_pressed("right"):
 		velocity.x = lerp(velocity.x, max_speed_right, 0.5)
-	if ($RayCast2D.get_collider() or is_on_floor()) and Input.is_action_just_pressed("jump"):
-		velocity.y = -15000
+	if $RayCast2D.get_collider() and Input.is_action_just_pressed("jump"):
+		velocity.y = jump_height
 		if velocity.x < 0:
 			max_speed_left -= 2500
 		elif velocity.x > 0:
 			max_speed_right += 2500
 		
-	if Input.is_mouse_button_pressed(1):
+	if Input.is_action_pressed("teleport"):
 		position = get_global_mouse_position()
 		velocity = Vector2()
 
-
 func apply_friction():
 	if is_on_floor():
-		velocity.x *= 0.9
+		velocity.x *= friction_strength
 	if floor_too_long:
 		velocity.x = lerp(velocity.x, 0, 0.1)
-
 
 func apply_gravity():
 	if is_on_floor() && velocity.y > 0:
 		velocity.y = 0
-	velocity.y += 1000
+	velocity.y += gravity_strength
 
 
 func apply_slope():
@@ -71,8 +65,7 @@ func apply_slope():
 			disable_input = true
 			$InputDisableTimer.start()
 
-
-func propel(body_entered, detecting_area):
+func propel(_body_entered, detecting_area):
 	var direction = position - detecting_area.position
 	velocity = direction*2000
 	if velocity.x < -100:
@@ -82,20 +75,17 @@ func propel(body_entered, detecting_area):
 	disable_input = true
 	$InputDisableTimer.start()
 
-
 func is_on_floor_for_too_long():
 	if is_on_floor() and $FloorTimer.time_left == 0:
 		$FloorTimer.start()
 	if !is_on_floor():
 		$FloorTimer.stop()
 		floor_too_long = false
-		
 
 func _on_FloorTimer_timeout():
 	max_speed_left = -5000
 	max_speed_right = 5000
 	floor_too_long = true
-
 
 func handle_max_speed_direction():
 	if velocity.x < -10:
@@ -103,10 +93,12 @@ func handle_max_speed_direction():
 	elif velocity.x > 10:
 		max_speed_left = -5000
 
-
 func _on_InputDisableTimer_timeout():
 	disable_input = false
 
-
 func _on_Area2D_body_entered(body):
 	get_node("../Player").queue_free()
+
+func _on_Button_pressed():
+	position = Vector2(500,500)
+	$Button.release_focus()
