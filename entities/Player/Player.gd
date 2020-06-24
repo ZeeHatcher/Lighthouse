@@ -64,6 +64,8 @@ func handle_move_input() -> void:
 func handle_shoot() -> void:
 	if (Input.is_action_just_pressed("click")):
 		gun.fire()
+	if (Input.is_action_just_pressed("reload")):
+		gun.reload()
 
 func aim() -> void:
 	var position_mouse := get_global_mouse_position()
