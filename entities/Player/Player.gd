@@ -2,7 +2,14 @@ extends KinematicBody2D
 
 signal stair_entered(player, direction)
 
-export (int) var speed_move := 200
+const TARGET_FPS = 60
+const ACCELERATION = 8
+const MAX_SPEED = 64
+const FRICTION = 10
+const AIR_RESISTANCE = 1
+const GRAVITY = 4
+const JUMP_FORCE = 140
+
 
 var velocity := Vector2()
 
@@ -14,31 +21,51 @@ func _ready() -> void:
 	var stairs := get_tree().get_nodes_in_group("stairs")
 	
 	for stair in stairs:
+# warning-ignore:return_value_discarded
 		connect("stair_entered", stair, "_on_Player_stair_entered")
 
-func _physics_process(_delta: float) -> void:
+func _process(delta):
+	$CanvasLayer/Control/vbox/Velocity.text = str(velocity.x)
+	
+func _physics_process(delta):
 	aim()
-	handle_move_input()
 	handle_shoot()
-	velocity = move_and_slide(velocity)
-	
+	#Movement
+	var x_input = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
+	$CanvasLayer/Control/vbox/Xinput.text = str(x_input)
+	if x_input != 0:
+		velocity.x += x_input * ACCELERATION * delta * TARGET_FPS
+		velocity.x = clamp(velocity.x, -MAX_SPEED, MAX_SPEED)
 
-func handle_move_input() -> void:
-	velocity = Vector2()
+	velocity.y += GRAVITY * delta * TARGET_FPS
+
+	if is_on_floor():
+		if x_input == 0:
+			velocity.x = lerp(velocity.x, 0, FRICTION * delta)
+			
+		if Input.is_action_just_pressed("move_up"):
+			velocity.y = -JUMP_FORCE
+	else:
+		if Input.is_action_just_released("move_up") and velocity.y < -JUMP_FORCE/2:
+			velocity.y = -JUMP_FORCE/2
+		
+		if x_input == 0:
+			velocity.x = lerp(velocity.x, 0, AIR_RESISTANCE * delta)
+			
+	velocity = move_and_slide(velocity, Vector2.UP)
+
+	# End of movement
+	handle_animation()
 	
-	if (Input.is_action_pressed("move_right")):
-		velocity.x += 1
-		
-	if (Input.is_action_pressed("move_left")):
-		velocity.x -= 1
-		
-	if (velocity.x == 0):
+func handle_animation() -> void:
+	# Animation 
+	if (round(velocity.x) == 0):
 		sprite_character.play("idle")
 		sprite_rifle.frame = 0
 		sprite_rifle.visible = false
 		gun.visible = true
 	else:
-		if (velocity.x > 0):
+		if (velocity.x  > 0):
 			sprite_character.flip_h = false
 			sprite_rifle.flip_h = false
 			sprite_rifle.position.x = 5
@@ -52,25 +79,25 @@ func handle_move_input() -> void:
 		sprite_character.play("run")
 		sprite_rifle.play("run")
 		gun.visible = false
-		
-	if (Input.is_action_just_pressed("move_down")):
-		emit_signal("stair_entered", self, -1)
-	
-	if (Input.is_action_just_pressed("move_up")):
-		emit_signal("stair_entered", self, 1)
-	
-	velocity = velocity.normalized() * speed_move
 
+func stairs_input():
+	# Stair Inputs
+	var x_input = Input.get_action_strength("move_up") - Input.get_action_strength("move_down")
+	$CanvasLayer/Control/vbox/updown.text = str(x_input)
+	match x_input:
+		-1:
+			emit_signal("stair_entered", self, -1)
+		1:
+			emit_signal("stair_entered", self, 1)
+	
 func handle_shoot() -> void:
-	if (Input.is_action_just_pressed("click")):
+	if (Input.is_action_just_pressed("click")): # left click
 		gun.fire()
-	if (Input.is_action_just_pressed("reload")):
+	if (Input.is_action_just_pressed("reload")): # r 
 		gun.reload()
 
 func aim() -> void:
 	var position_mouse := get_global_mouse_position()
-	
 	gun.look_at(get_global_mouse_position())
 	sprite_character.flip_h = true if (position_mouse.x < global_position.x) else false
 	gun.sprite.flip_v = true if (position_mouse.x < gun.global_position.x) else false
-		

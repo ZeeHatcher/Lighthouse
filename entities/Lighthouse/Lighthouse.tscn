@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/images/placeholder.png" type="Texture" id=1]
 [ext_resource path="res://entities/Lighthouse/Lighthouse.gd" type="Script" id=2]
@@ -7,6 +7,9 @@
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 128 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 634.186, 10 )
 
 [node name="Lighthouse" type="Area2D"]
 collision_layer = 32
@@ -40,4 +43,8 @@ level = 3
 
 [node name="Beacon" parent="." instance=ExtResource( 4 )]
 position = Vector2( 0, -250 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2( 4.91101, 7.36642 )
+shape = SubResource( 2 )
 [connection signal="body_entered" from="." to="." method="_on_Lighthouse_body_entered"]

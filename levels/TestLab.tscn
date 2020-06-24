@@ -18,10 +18,10 @@ position = Vector2( 516.065, 551.486 )
 stream = ExtResource( 9 )
 
 [node name="Background" type="ColorRect" parent="."]
-margin_left = -1317.0
-margin_top = -92.0
-margin_right = 2344.0
-margin_bottom = 681.0
+margin_left = -684.0
+margin_top = -39.0
+margin_right = 1710.0
+margin_bottom = 628.0
 color = Color( 0.247059, 0.247059, 0.247059, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -31,7 +31,7 @@ __meta__ = {
 color = Color( 0.490196, 0.490196, 0.490196, 1 )
 
 [node name="Platform" type="StaticBody2D" parent="."]
-position = Vector2( 512, 584 )
+position = Vector2( 531.435, 582.087 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -48,7 +48,7 @@ margin_left = -1174.0
 margin_top = -16.0
 margin_right = 1175.0
 margin_bottom = 16.0
-color = Color( 0.3125, 0.3125, 0.3125, 1 )
+color = Color( 0.945098, 1, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

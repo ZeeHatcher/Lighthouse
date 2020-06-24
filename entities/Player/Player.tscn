@@ -10,7 +10,7 @@
 [ext_resource path="res://entities/Player/UI.gd" type="Script" id=8]
 
 [sub_resource type="OccluderPolygon2D" id=1]
-polygon = PoolVector2Array( -3, -7, 0, -7, 0, 6, -3, 6 )
+polygon = PoolVector2Array( -0.959341, -6.91944, 0.938826, -6.98379, 0.970997, -6.01862, 2.00051, -6.05079, 1.93616, -5.05345, 1.03534, -4.98911, 0.970997, 3.95478, -1.08803, 4.0513, -1.05585, 4.95212, -2.02102, 4.98429, -2.08537, 5.98163, -3, 6, -2.95402, 5.08081, -2.0532, 4.91995, -2.02102, -3.95959, -1.05585, -4.05611 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 2, 6 )
@@ -91,7 +91,6 @@ font_data = ExtResource( 4 )
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
 script = ExtResource( 2 )
-speed_move = 75
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 modulate = Color( 1, 1, 1, 0 )
@@ -173,4 +172,19 @@ margin_bottom = 90.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Velocity" type="Label" parent="CanvasLayer/Control/vbox"]
+margin_top = 94.0
+margin_right = 91.0
+margin_bottom = 108.0
+
+[node name="Xinput" type="Label" parent="CanvasLayer/Control/vbox"]
+margin_top = 112.0
+margin_right = 91.0
+margin_bottom = 126.0
+
+[node name="updown" type="Label" parent="CanvasLayer/Control/vbox"]
+margin_top = 130.0
+margin_right = 91.0
+margin_bottom = 144.0
 [connection signal="fired" from="Gun" to="CanvasLayer/Control" method="_on_Gun_fired"]
