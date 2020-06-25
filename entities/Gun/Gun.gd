@@ -23,6 +23,7 @@ onready var scene_lightning = preload("res://entities/Projectile/Lightning/Light
 func fire():
 	emit_signal("fired")
 	if ammo != 0:
+		$Splat.play()
 		ammo -= 1
 		var lightning : Line2D = scene_lightning.instance()
 		level.add_child(lightning)
@@ -43,6 +44,8 @@ func reload():
 	ammo = 10
 	$Reload.play()
 
+func charge():
+	$Light2D.energy = 1
 
 func _on_Reload_finished():
 	emit_signal("fired")

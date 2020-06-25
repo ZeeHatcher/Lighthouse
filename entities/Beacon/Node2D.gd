@@ -5,7 +5,7 @@ var time := 0.0
 func _ready():
 	pass
 	
-func _process(delta):
+func _physics_process(delta):
 	scale.x = sin(time)
 	
 	time += delta

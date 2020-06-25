@@ -1,6 +1,6 @@
 extends Node
 
-onready var enemy_fly := preload("res://entities/Enemy/Fly/Fly.tscn")
+onready var enemy_fly := preload("res://entities/Enemy/BeeMonster/Fly.tscn")
 onready var enemy_swarm := preload("res://entities/Enemy/swarm_mother.tscn")
 
 

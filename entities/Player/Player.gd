@@ -10,8 +10,6 @@ const AIR_RESISTANCE = 1
 const GRAVITY = 4
 const JUMP_FORCE = 140
 
-var disable_input := false
-
 var velocity := Vector2()
 
 onready var gun := $Gun
@@ -44,7 +42,7 @@ func _physics_process(delta):
 #		yield(get_tree().create_timer(1.0),"timeout")
 		emit_signal("stair_entered", self, 1)
 		
-	if is_on_floor() && disable_input == false:
+	if is_on_floor():
 		if x_input == 0:
 			velocity.x = lerp(velocity.x, 0, FRICTION * delta)
 		if Input.is_action_just_pressed("move_up"):
@@ -61,19 +59,13 @@ func _physics_process(delta):
 
 	handle_animation()
 	
-
-#func stairs_input():
-#	# Stair Inputs #
-#	var x_input = Input.get_action_strength("move_up") - Input.get_action_strength("move_down")
-#	match x_input:
-#		-1:
-#			emit_signal("stair_entered", self, -1)
-#		1:
-#			emit_signal("stair_entered", self, 1)
 	
 func handle_shoot() -> void:
 	if (Input.is_action_just_pressed("click")): # left click
+		gun.charge()
+		yield(get_tree().create_timer(1.0),"timeout")
 		gun.fire()
+		velocity = Vector2.ZERO
 	if (Input.is_action_just_pressed("reload")): # r 
 		gun.reload()
 
