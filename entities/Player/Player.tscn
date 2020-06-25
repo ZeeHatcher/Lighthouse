@@ -153,7 +153,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LineEdit" type="LineEdit" parent="CanvasLayer/Control/vbox"]
+[node name="HPV" type="LineEdit" parent="CanvasLayer/Control/vbox"]
 margin_top = 19.0
 margin_right = 91.0
 margin_bottom = 43.0
@@ -165,7 +165,7 @@ margin_bottom = 62.0
 custom_fonts/font = SubResource( 17 )
 text = "Ammo"
 
-[node name="LineEdit2" type="LineEdit" parent="CanvasLayer/Control/vbox"]
+[node name="AmmoV" type="LineEdit" parent="CanvasLayer/Control/vbox"]
 margin_top = 66.0
 margin_right = 91.0
 margin_bottom = 90.0
@@ -177,14 +177,4 @@ __meta__ = {
 margin_top = 94.0
 margin_right = 91.0
 margin_bottom = 108.0
-
-[node name="Xinput" type="Label" parent="CanvasLayer/Control/vbox"]
-margin_top = 112.0
-margin_right = 91.0
-margin_bottom = 126.0
-
-[node name="updown" type="Label" parent="CanvasLayer/Control/vbox"]
-margin_top = 130.0
-margin_right = 91.0
-margin_bottom = 144.0
 [connection signal="fired" from="Gun" to="CanvasLayer/Control" method="_on_Gun_fired"]

@@ -24,4 +24,5 @@ func warp(entity: KinematicBody2D, direction: int) -> void:
 func _on_Player_stair_entered(player: KinematicBody2D, direction: int) -> void:
 	if (overlaps_body(player)):
 		warp(player, direction)
+		$Sound.play()
 	
