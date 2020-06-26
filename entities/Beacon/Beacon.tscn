@@ -21,4 +21,4 @@ color = Color( 1, 0.941176, 0.458824, 1 )
 energy = 1.66
 mode = 2
 shadow_enabled = true
-shadow_filter = 2
+shadow_filter = 3

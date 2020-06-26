@@ -22,7 +22,7 @@ signal outofammo
 onready var scene_lightning = preload("res://entities/Projectile/Lightning/Lightning.tscn")
 func fire():
 	emit_signal("fired")
-	if ammo != 0:
+	if ammo != -1:
 		$Splat.play()
 		ammo -= 1
 		var lightning : Line2D = scene_lightning.instance()
@@ -45,7 +45,7 @@ func reload():
 	$Reload.play()
 
 func charge():
-	$Light2D.energy = 1
+	pass
 
 func _on_Reload_finished():
 	emit_signal("fired")

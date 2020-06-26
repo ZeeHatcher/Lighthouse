@@ -13,7 +13,7 @@ const JUMP_FORCE = 140
 var velocity := Vector2()
 
 onready var gun := $Gun
-onready var sprite_character := $Character
+onready var sprite_character := $Gunner
 onready var sprite_rifle := $Rifle
 
 func _ready() -> void:
@@ -34,6 +34,17 @@ func _physics_process(delta):
 		velocity.x += x_input * ACCELERATION * delta * TARGET_FPS
 		velocity.x = clamp(velocity.x, -MAX_SPEED, MAX_SPEED)
 		
+		$Footstep.play()
+		$AnimationPlayer.play("Walk")
+		sprite_character.flip_h = x_input < 0
+		sprite_rifle.flip_h = x_input < 0
+		sprite_rifle.position.x = -6 if x_input < 0 else 5
+		sprite_rifle.visible = true
+		gun.visible = false
+	else:
+		$AnimationPlayer.play("Stand")
+		sprite_rifle.visible = false
+		gun.visible = true
 	# Gravity #
 	velocity.y += GRAVITY * delta * TARGET_FPS
 	
@@ -56,9 +67,6 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 	## End of movement ##
-
-	handle_animation()
-	
 	
 func handle_shoot() -> void:
 	if (Input.is_action_just_pressed("click")): # left click
@@ -74,26 +82,3 @@ func aim() -> void:
 	gun.look_at(position_mouse)
 	sprite_character.flip_h = true if (position_mouse.x < global_position.x) else false
 	gun.sprite.flip_v = true if (position_mouse.x < gun.global_position.x) else false
-
-func handle_animation() -> void:
-	# Animation 
-	if (round(velocity.x) == 0):
-		sprite_character.play("idle")
-		sprite_rifle.frame = 0
-		sprite_rifle.visible = false
-		gun.visible = true
-	else:
-		if (velocity.x  > 0):
-			sprite_character.flip_h = false
-			sprite_rifle.flip_h = false
-			sprite_rifle.position.x = 5
-			
-		elif (velocity.x < 0):
-			sprite_character.flip_h = true
-			sprite_rifle.flip_h = true
-			sprite_rifle.position.x = -6
-		
-		sprite_rifle.visible = true
-		sprite_character.play("run")
-		sprite_rifle.play("run")
-		gun.visible = false

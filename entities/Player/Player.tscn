@@ -1,84 +1,64 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://assets/images/rifle_run_sheet.png" type="Texture" id=1]
 [ext_resource path="res://entities/Player/Player.gd" type="Script" id=2]
 [ext_resource path="res://entities/Gun/Gun.tscn" type="PackedScene" id=3]
 [ext_resource path="res://fonts/JetBrainsMono-Regular.ttf" type="DynamicFontData" id=4]
-[ext_resource path="res://assets/images/mc_idle.png" type="Texture" id=5]
-[ext_resource path="res://assets/images/mc_run_sheet.png" type="Texture" id=6]
 [ext_resource path="res://levels/Camera2D.gd" type="Script" id=7]
 [ext_resource path="res://entities/Player/UI.gd" type="Script" id=8]
+[ext_resource path="res://assets/audio/footstep.wav" type="AudioStream" id=9]
+[ext_resource path="res://assets/images/run_sheet.png" type="Texture" id=10]
 
 [sub_resource type="OccluderPolygon2D" id=1]
 polygon = PoolVector2Array( -0.959341, -6.91944, 0.938826, -6.98379, 0.970997, -6.01862, 2.00051, -6.05079, 1.93616, -5.05345, 1.03534, -4.98911, 0.970997, 3.95478, -1.08803, 4.0513, -1.05585, 4.95212, -2.02102, 4.98429, -2.08537, 5.98163, -3, 6, -2.95402, 5.08081, -2.0532, 4.91995, -2.02102, -3.95959, -1.05585, -4.05611 )
 
+[sub_resource type="Animation" id=19]
+resource_name = "Stand"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Gunner:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=18]
+resource_name = "Walk"
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Gunner:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4, 4 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Rifle:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4 ]
+}
+
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 2, 6 )
-
-[sub_resource type="AtlasTexture" id=3]
-atlas = ExtResource( 5 )
-region = Rect2( 0, 0, 4, 13 )
-
-[sub_resource type="AtlasTexture" id=4]
-atlas = ExtResource( 6 )
-region = Rect2( 0, 0, 6, 13 )
-
-[sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 6 )
-region = Rect2( 6, 0, 6, 13 )
-
-[sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 6 )
-region = Rect2( 12, 0, 6, 13 )
-
-[sub_resource type="AtlasTexture" id=7]
-atlas = ExtResource( 6 )
-region = Rect2( 18, 0, 6, 13 )
-
-[sub_resource type="AtlasTexture" id=8]
-atlas = ExtResource( 6 )
-region = Rect2( 24, 0, 6, 13 )
-
-[sub_resource type="SpriteFrames" id=9]
-animations = [ {
-"frames": [ SubResource( 3 ) ],
-"loop": true,
-"name": "idle",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
-"loop": true,
-"name": "run",
-"speed": 5.0
-} ]
-
-[sub_resource type="AtlasTexture" id=10]
-atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 13, 7 )
-
-[sub_resource type="AtlasTexture" id=11]
-atlas = ExtResource( 1 )
-region = Rect2( 13, 0, 13, 7 )
-
-[sub_resource type="AtlasTexture" id=12]
-atlas = ExtResource( 1 )
-region = Rect2( 26, 0, 13, 7 )
-
-[sub_resource type="AtlasTexture" id=13]
-atlas = ExtResource( 1 )
-region = Rect2( 39, 0, 13, 7 )
-
-[sub_resource type="AtlasTexture" id=14]
-atlas = ExtResource( 1 )
-region = Rect2( 52, 0, 13, 7 )
-
-[sub_resource type="SpriteFrames" id=15]
-animations = [ {
-"frames": [ SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ) ],
-"loop": true,
-"name": "run",
-"speed": 5.0
-} ]
 
 [sub_resource type="DynamicFont" id=16]
 size = 12
@@ -92,36 +72,45 @@ font_data = ExtResource( 4 )
 collision_layer = 2
 script = ExtResource( 2 )
 
+[node name="Footstep" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 modulate = Color( 1, 1, 1, 0 )
 position = Vector2( 1, 1 )
 occluder = SubResource( 1 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Stand = SubResource( 19 )
+anims/Walk = SubResource( 18 )
+
+[node name="Torso" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 1 )
 shape = SubResource( 2 )
 
-[node name="Character" type="AnimatedSprite" parent="."]
-frames = SubResource( 9 )
-animation = "run"
-frame = 3
+[node name="Gunner" type="Sprite" parent="."]
+texture = ExtResource( 10 )
+hframes = 6
+frame = 1
 
-[node name="Rifle" type="AnimatedSprite" parent="."]
-position = Vector2( 5, 0 )
-frames = SubResource( 15 )
-animation = "run"
+[node name="Rifle" type="Sprite" parent="."]
+position = Vector2( 4.50532, 1.95203 )
+texture = ExtResource( 1 )
+hframes = 5
 
 [node name="Gun" parent="." instance=ExtResource( 3 )]
 position = Vector2( -1, -2 )
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera" type="Camera2D" parent="."]
 position = Vector2( 0, -200 )
 current = true
+process_mode = 0
 limit_left = -250
 limit_top = 100
 limit_right = 1250
 limit_bottom = 1000
 smoothing_enabled = true
+smoothing_speed = 1.0
 script = ExtResource( 7 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

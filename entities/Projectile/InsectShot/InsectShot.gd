@@ -8,4 +8,5 @@ func _maneuver(delta: float) -> void:
 	pass
 
 func _on_collide(collider: Object) -> void:
-	queue_free()
+#	queue_free()
+	pass
