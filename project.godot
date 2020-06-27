@@ -29,10 +29,12 @@ _global_script_class_icons={
 config/name="Lighthouse"
 run/main_scene="res://levels/TestLab.tscn"
 
-[autoload]
+[debug]
 
-SCENES="*res://singletons/scenes.gd"
-ENTITIES="*res://singletons/entities.gd"
+settings/stdout/verbose_stdout=true
+gdscript/warnings/treat_warnings_as_errors=true
+gdscript/warnings/unused_class_variable=true
+gdscript/warnings/return_value_discarded=false
 
 [display]
 
@@ -43,6 +45,10 @@ window/size/test_height=1080
 window/dpi/allow_hidpi=true
 window/stretch/mode="2d"
 window/stretch/aspect="expand"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "time-tracker" )
 
 [input]
 
@@ -98,4 +104,9 @@ E={
 
 [rendering]
 
+quality/intended_usage/framebuffer_allocation=0
+quality/intended_usage/framebuffer_allocation.mobile=0
+quality/2d/use_pixel_snap=true
+quality/filters/use_nearest_mipmap_filter=true
+quality/subsurface_scattering/follow_surface=true
 environment/default_environment="res://default_env.tres"

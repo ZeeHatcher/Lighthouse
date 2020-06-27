@@ -65,7 +65,7 @@ func _on_ShockTimer_timeout():
 	var target_enemies = []
 	var min_distance = 10000
 	var closest_enemy_index = -1
-	for x in range(max_chain_targets):
+	while max_chain_targets != 0:
 		min_distance = 10000
 		closest_enemy_index = -1
 		for i in range(overlap_enemies.size()):
@@ -77,6 +77,8 @@ func _on_ShockTimer_timeout():
 			overlap_enemies.remove(closest_enemy_index)
 			if overlap_enemies.size() == 0:
 				break
+				
+		max_chain_targets -= 1
 	
 	# hit those enemies, kill the enemies, make more lightning
 	for i in range(target_enemies.size()):

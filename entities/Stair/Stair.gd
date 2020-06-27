@@ -2,7 +2,7 @@ extends Area2D
 
 export (int) var level := 0
 
-onready var scene_tree := get_tree()
+#onready var scene_tree := get_tree()
 # onready var steps = get_node("../stair")
 
 func _ready() -> void:

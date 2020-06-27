@@ -22,7 +22,7 @@ func _ready() -> void:
 	for stair in stairs:
 		connect("stair_entered", stair, "_on_Player_stair_entered")
 
-func _process(delta):
+func _process(_delta):
 	$CanvasLayer/Control/vbox/Velocity.text = str(velocity.x)
 	
 func _physics_process(delta):
@@ -59,8 +59,8 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("move_up"):
 			velocity.y = -JUMP_FORCE
 	else:
-		if Input.is_action_just_released("move_up") and velocity.y < -JUMP_FORCE/2:
-			velocity.y = -JUMP_FORCE/2
+		if Input.is_action_just_released("move_up") and velocity.y < float(-JUMP_FORCE)/2:
+			velocity.y = float(-JUMP_FORCE)/2
 		if x_input == 0:
 			velocity.x = lerp(velocity.x, 0, AIR_RESISTANCE * delta)
 			
@@ -80,5 +80,3 @@ func handle_shoot() -> void:
 func aim() -> void:
 	var position_mouse := get_global_mouse_position()
 	gun.look_at(position_mouse)
-	sprite_character.flip_h = true if (position_mouse.x < global_position.x) else false
-	gun.sprite.flip_v = true if (position_mouse.x < gun.global_position.x) else false

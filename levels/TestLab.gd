@@ -3,12 +3,14 @@ extends Node2D
 onready var scene_tree := get_tree()
 onready var root := scene_tree.get_root()
 onready var level := root.get_node("TestLab")
+# warning-ignore:unused_class_variable
 onready var viewport := level.get_viewport()
 
+# warning-ignore:unused_class_variable
 onready var lighthouse := level.get_node("Lighthouse")
+# warning-ignore:unused_class_variable
 onready var player := level.get_node("Player")
 
-onready var sprite = $Sprite
 
 export (String) var title = "Alpha"
 var enemy_text: int;
@@ -25,6 +27,7 @@ func _process(_delta):
 		 b = Engine.get_frames_per_second(),
 		 c = enemy_text})
 		)
+	
 #	sprite.material.set_shader_param("")
 		# if its a single value you can do this instead
 		#("%d is how many times you died") % value

@@ -4,7 +4,7 @@ onready var scene_tree := get_tree()
 onready var root := scene_tree.get_root()
 onready var level := root.get_node("TestLab")
 
-onready var sprite := $Sprite
+#onready var sprite := $Sprite
 onready var muzzle := $Muzzle
 var ammo := 10
 var ammo_toggle = false

@@ -1,0 +1,55 @@
+// great way to pause in execution
+yield(get_tree().create_timer(5.0),"timeout")
+
+// method check if ur lazy
+func _on_object_hit(object):
+    if object.has_method("smash"):
+        object.smash()
+		
+// to ignore an iteration in a for loop
+for i in array:
+	// error of some sort
+	continue 
+	// continues to next index
+
+// type check or part of a class
+if i is int:
+	do thing
+
+// to run code in editor
+// add this to the top of the script of a node
+tool
+
+//setget
+setget values like position so enemy classes are independent from a mob spawner
+setting position value for example also improves on performance maybe or errors when set 
+i guess.
+
+otherscript.gd
+
+extends Control
+func _ready():
+	# return error in console
+	get_parent().my_var = true
+	
+	pass
+
+mainscript.gd
+
+extends Node
+var my_var = false setget setter, getter
+
+setter(value):
+	if value != 0:
+		print("Can't change this {value} at this moment").format(value = value)
+		return 
+		
+getter(value):
+	if value != 0
+		return my_var * 2
+		
+doesn't work if you input values from editor obviously unless you make the script a tool 
+script
+
+
+	

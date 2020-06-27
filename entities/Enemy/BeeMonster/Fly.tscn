@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/images/light.png" type="Texture" id=1]
+[ext_resource path="res://entities/Enemy/BeeMonster/Fly.gd" type="Script" id=2]
+[ext_resource path="res://entities/Enemy/Enemy.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/images/fly.png" type="Texture" id=4]
+
+[sub_resource type="OccluderPolygon2D" id=1]
+polygon = PoolVector2Array( -10.5394, -6.58158, -5.43619, -2.5222, -7.2919, 1.30521, -7.17592, 6.75638, -2.18868, 12.9034, 11.9612, 1.53718, 8.24972, -5.65372, 11.7292, -8.32131, 11.7292, -8.32131, 11.7292, -8.32131, 9.17757, -13.8885, 9.17757, -13.8885, 2.91454, -11.4528, -0.564934, -6.69756, -3.81244, -11.4528, -9.2636, -12.3807, -9.2636, -12.3807, -11.5832, -9.24917 )
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 11.0
+height = 0.0
+
+[node name="BeeMonster" instance=ExtResource( 3 )]
+script = ExtResource( 2 )
+speed = 200
+attack_range = 500
+
+[node name="LightOccluder2D" parent="." index="1"]
+visible = false
+occluder = SubResource( 1 )
+
+[node name="CollisionShape2D" parent="." index="2"]
+position = Vector2( -0.811874, 1.15982 )
+shape = SubResource( 2 )
+
+[node name="Tail" type="Position2D" parent="." index="3"]
+position = Vector2( 0, 16 )
+
+[node name="AttackChargeTimer" type="Timer" parent="." index="4"]
+one_shot = true
+
+[node name="AttackCooldownTimer" type="Timer" parent="." index="5"]
+one_shot = true
+
+[node name="RandomMoveTimer" type="Timer" parent="." index="6"]
+one_shot = true
+
+[node name="Sprite" parent="." index="7"]
+texture = ExtResource( 4 )
+
+[node name="Light2D" type="Light2D" parent="." index="8"]
+scale = Vector2( 3.92275, 3.92275 )
+texture = ExtResource( 1 )
+energy = 0.0
+[connection signal="timeout" from="AttackChargeTimer" to="." method="_on_AttackChargeTimer_timeout"]
+[connection signal="timeout" from="AttackCooldownTimer" to="." method="_on_AttackCooldownTimer_timeout"]
+[connection signal="timeout" from="RandomMoveTimer" to="." method="_on_RandomMoveTimer_timeout"]
