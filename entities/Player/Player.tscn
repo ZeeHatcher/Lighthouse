@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://assets/images/rifle_run_sheet.png" type="Texture" id=1]
 [ext_resource path="res://entities/Player/Player.gd" type="Script" id=2]
@@ -12,7 +12,7 @@
 [sub_resource type="OccluderPolygon2D" id=1]
 polygon = PoolVector2Array( -0.959341, -6.91944, 0.938826, -6.98379, 0.970997, -6.01862, 2.00051, -6.05079, 1.93616, -5.05345, 1.03534, -4.98911, 0.970997, 3.95478, -1.08803, 4.0513, -1.05585, 4.95212, -2.02102, 4.98429, -2.08537, 5.98163, -3, 6, -2.95402, 5.08081, -2.0532, 4.91995, -2.02102, -3.95959, -1.05585, -4.05611 )
 
-[sub_resource type="Animation" id=19]
+[sub_resource type="Animation" id=2]
 resource_name = "Stand"
 length = 0.1
 tracks/0/type = "value"
@@ -28,7 +28,7 @@ tracks/0/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=18]
+[sub_resource type="Animation" id=3]
 resource_name = "Walk"
 length = 0.5
 loop = true
@@ -57,20 +57,58 @@ tracks/1/keys = {
 "values": [ 0, 1, 2, 3, 4 ]
 }
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 2, 6 )
 
-[sub_resource type="DynamicFont" id=16]
+[sub_resource type="DynamicFont" id=5]
 size = 12
 font_data = ExtResource( 4 )
 
-[sub_resource type="DynamicFont" id=17]
+[sub_resource type="DynamicFont" id=6]
 size = 12
 font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=7]
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 30
+outline_size = 1
+font_data = ExtResource( 4 )
+
+[sub_resource type="GDScript" id=9]
+script/source = "extends Label
+
+	# pause is spacebar
+var not_paused := true
+
+func _process(_delta) -> void:
+	if Input.is_action_just_pressed(\"pause\"):
+		if not_paused:
+			get_tree().paused = true
+			not_paused = false
+			visible = true
+		else:
+			get_tree().paused = false
+			not_paused = true
+			visible = false
+"
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
 script = ExtResource( 2 )
+
+[node name="Camera" type="Camera2D" parent="."]
+visible = false
+position = Vector2( 0, -200 )
+current = true
+limit_left = -250
+limit_top = 100
+limit_right = 1250
+limit_bottom = 1000
+smoothing_enabled = true
+smoothing_speed = 1.0
+script = ExtResource( 7 )
 
 [node name="Footstep" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 9 )
@@ -81,12 +119,12 @@ position = Vector2( 1, 1 )
 occluder = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Stand = SubResource( 19 )
-anims/Walk = SubResource( 18 )
+anims/Stand = SubResource( 2 )
+anims/Walk = SubResource( 3 )
 
 [node name="Torso" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 1 )
-shape = SubResource( 2 )
+shape = SubResource( 4 )
 
 [node name="Gunner" type="Sprite" parent="."]
 texture = ExtResource( 10 )
@@ -99,19 +137,8 @@ texture = ExtResource( 1 )
 hframes = 5
 
 [node name="Gun" parent="." instance=ExtResource( 3 )]
+visible = false
 position = Vector2( -1, -2 )
-
-[node name="Camera" type="Camera2D" parent="."]
-position = Vector2( 0, -200 )
-current = true
-process_mode = 0
-limit_left = -250
-limit_top = 100
-limit_right = 1250
-limit_bottom = 1000
-smoothing_enabled = true
-smoothing_speed = 1.0
-script = ExtResource( 7 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -135,7 +162,7 @@ __meta__ = {
 [node name="HP" type="Label" parent="CanvasLayer/Control/vbox"]
 margin_right = 91.0
 margin_bottom = 15.0
-custom_fonts/font = SubResource( 16 )
+custom_fonts/font = SubResource( 5 )
 text = "Health Points"
 align = 1
 __meta__ = {
@@ -151,7 +178,7 @@ margin_bottom = 43.0
 margin_top = 47.0
 margin_right = 91.0
 margin_bottom = 62.0
-custom_fonts/font = SubResource( 17 )
+custom_fonts/font = SubResource( 6 )
 text = "Ammo"
 
 [node name="AmmoV" type="LineEdit" parent="CanvasLayer/Control/vbox"]
@@ -165,5 +192,29 @@ __meta__ = {
 [node name="Velocity" type="Label" parent="CanvasLayer/Control/vbox"]
 margin_top = 94.0
 margin_right = 91.0
-margin_bottom = 108.0
+margin_bottom = 114.0
+custom_fonts/font = SubResource( 7 )
+autowrap = true
+
+[node name="Pause" type="Label" parent="CanvasLayer/Control"]
+pause_mode = 2
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -54.0
+margin_top = -19.0
+margin_right = 54.0
+margin_bottom = 19.0
+custom_fonts/font = SubResource( 8 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+text = "Paused"
+align = 1
+valign = 1
+uppercase = true
+script = SubResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="fired" from="Gun" to="CanvasLayer/Control" method="_on_Gun_fired"]

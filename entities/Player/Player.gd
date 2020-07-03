@@ -16,6 +16,7 @@ onready var gun := $Gun
 onready var sprite_character := $Gunner
 onready var sprite_rifle := $Rifle
 
+
 func _ready() -> void:
 	var stairs := get_tree().get_nodes_in_group("stairs")
 	
@@ -23,8 +24,9 @@ func _ready() -> void:
 		connect("stair_entered", stair, "_on_Player_stair_entered")
 
 func _process(_delta):
-	$CanvasLayer/Control/vbox/Velocity.text = str(velocity.x)
-	
+	# Assigns a value for velocity to the text box top left
+	$CanvasLayer/Control/vbox/Velocity.text = "Velocity X:" + str(velocity.x)
+
 func _physics_process(delta):
 	aim()
 	handle_shoot()
@@ -63,7 +65,8 @@ func _physics_process(delta):
 			velocity.y = float(-JUMP_FORCE)/2
 		if x_input == 0:
 			velocity.x = lerp(velocity.x, 0, AIR_RESISTANCE * delta)
-			
+	
+	# For the player not get stuck on the ceiling #
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 	## End of movement ##
@@ -79,4 +82,6 @@ func handle_shoot() -> void:
 
 func aim() -> void:
 	var position_mouse := get_global_mouse_position()
+	sprite_character.flip_h = true if (position_mouse.x < global_position.x) else false
 	gun.look_at(position_mouse)
+

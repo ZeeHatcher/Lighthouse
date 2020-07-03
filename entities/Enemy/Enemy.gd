@@ -5,7 +5,7 @@ enum Side { LEFT, RIGHT }
 
 onready var scene_tree := get_tree()
 onready var root := scene_tree.get_root()
-# warning-ignore:unused_class_variable
+
 onready var level := root.get_node("TestLab")
 
 export (int) var speed = 0
@@ -13,11 +13,11 @@ export (int) var speed = 0
 var side : int = Side.LEFT setget set_side
 
 onready var velocity := Vector2(speed, 0)
-# warning-ignore:unused_class_variable
+
 onready var hit_box := $CollisionShape2D
-# warning-ignore:unused_class_variable
+
 onready var sprite := $Sprite
-# warning-ignore:unused_class_variable
+
 onready var occluder := $LightOccluder2D
 
 func _ready() -> void:

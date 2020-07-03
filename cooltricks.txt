@@ -52,4 +52,9 @@ doesn't work if you input values from editor obviously unless you make the scrip
 script
 
 
+if an array is empty it returns a false boolean in an if statement.
+
+if you need to overload a function and use its base code just call the function with ".function()"
+
+
 	

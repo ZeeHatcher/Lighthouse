@@ -3,12 +3,8 @@ extends Node2D
 onready var scene_tree := get_tree()
 onready var root := scene_tree.get_root()
 onready var level := root.get_node("TestLab")
-# warning-ignore:unused_class_variable
 onready var viewport := level.get_viewport()
-
-# warning-ignore:unused_class_variable
 onready var lighthouse := level.get_node("Lighthouse")
-# warning-ignore:unused_class_variable
 onready var player := level.get_node("Player")
 
 
@@ -20,14 +16,11 @@ func _process(_delta):
 	enemy_text = enemy if enemy != null else null
 	if Input.is_action_just_pressed("ui_cancel"):
 		get_tree().quit()
-		
-#	OS.set_window_title(title + " | fps: " + str(Engine.get_frames_per_second()) + " | Mob count: " + str(enemy_text))
 	OS.set_window_title("{a} | fps: {b} | Mob count: {c}".format(
 		{a = title,
 		 b = Engine.get_frames_per_second(),
 		 c = enemy_text})
 		)
 	
-#	sprite.material.set_shader_param("")
 		# if its a single value you can do this instead
 		#("%d is how many times you died") % value

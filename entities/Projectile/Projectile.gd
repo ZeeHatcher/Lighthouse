@@ -5,11 +5,11 @@ export (int) var speed = 0
 export (String, "projectile_player", "projectile_enemy") var group := "projectile_player"
 
 onready var velocity := Vector2(speed, 0)
-# warning-ignore:unused_class_variable
+
 onready var hit_box := $CollisionShape2D
-# warning-ignore:unused_class_variable
+
 onready var sprite := $Sprite
-# warning-ignore:unused_class_variable
+
 onready var light := $Light2D
 
 func _ready():
@@ -22,6 +22,7 @@ func _physics_process(delta: float) -> void:
 	
 	if (collision):
 		_on_collide(collision.collider)
+		queue_free()
 	
 func point_to(target: Vector2) -> void:
 	look_at(target)
