@@ -1,0 +1,1 @@
+console in game, there's a addon for it in the asset store but i couldn't get it working so i might just yoink the code that does it.

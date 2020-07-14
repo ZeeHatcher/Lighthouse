@@ -5,7 +5,7 @@ signal stair_entered(player, direction)
 const TARGET_FPS = 60
 const ACCELERATION = 8
 const MAX_SPEED = 64
-const FRICTION = 10
+var FRICTION = 10
 const AIR_RESISTANCE = 1
 const GRAVITY = 4
 const JUMP_FORCE = 140
@@ -18,6 +18,8 @@ onready var sprite_rifle := $Rifle
 
 
 func _ready() -> void:
+	add_to_group("player")
+	
 	var stairs := get_tree().get_nodes_in_group("stairs")
 	
 	for stair in stairs:
@@ -36,7 +38,6 @@ func _physics_process(delta):
 		velocity.x += x_input * ACCELERATION * delta * TARGET_FPS
 		velocity.x = clamp(velocity.x, -MAX_SPEED, MAX_SPEED)
 		
-		$Footstep.play()
 		$AnimationPlayer.play("Walk")
 		sprite_character.flip_h = x_input < 0
 		sprite_rifle.flip_h = x_input < 0
@@ -68,6 +69,9 @@ func _physics_process(delta):
 	
 	# For the player not get stuck on the ceiling #
 	velocity = move_and_slide(velocity, Vector2.UP)
+	
+	if (Input.is_action_just_pressed("E")):
+		position = lerp(get_global_position(), get_global_mouse_position(), 0.5)
 
 	## End of movement ##
 	

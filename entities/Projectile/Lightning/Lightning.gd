@@ -10,7 +10,7 @@ var scene_lightning = load("res://entities/Projectile/Lightning/Lightning.tscn")
 
 export (int) var max_chain_targets := 2     	# Max number of branch offs in each iteration
 export (int) var max_chain_length := 3      	# Max distance a lightning can travel per branch
-export (int) var min_chain_radius := 1000    	# Radius of lightning branch
+export (int) var min_chain_radius := 100    	# Radius of lightning branch
 
 var chained_length = 0
 var enemies_hit = []

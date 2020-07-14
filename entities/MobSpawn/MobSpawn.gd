@@ -9,12 +9,12 @@ onready var paths := [$LeftPath, $RightPath]
 onready var scene_enemy := preload("res://entities/Enemy/BeeMonster/Fly.tscn")
 #onready var scene_enemy := preload("res://entities/Enemy/swarm_mother.tscn")
 
-func _ready():
-	pass
+var side: int
+var spawn_point: PathFollow2D 
 
 func _on_Timer_timeout():
-	var side := randi() % 2
-	var spawn_point : PathFollow2D = paths[side].get_node("PathFollow2D")
+	side = randi() % 2
+	spawn_point = paths[side].get_node("PathFollow2D")
 	
 	spawn_point.offset = randi() % int(viewport.size.y)
 	

@@ -5,11 +5,8 @@ export (int) var speed = 0
 export (String, "projectile_player", "projectile_enemy") var group := "projectile_player"
 
 onready var velocity := Vector2(speed, 0)
-
 onready var hit_box := $CollisionShape2D
-
 onready var sprite := $Sprite
-
 onready var light := $Light2D
 
 func _ready():
@@ -31,10 +28,8 @@ func point_to(target: Vector2) -> void:
 func _on_VisibilityNotifier2D_screen_exited() -> void:
 	queue_free()
 
-# warning-ignore:unused_argument
 func _maneuver(delta: float) -> void:
 	pass
-
-# warning-ignore:unused_argument
+	
 func _on_collide(collider: Object) -> void:
 	pass

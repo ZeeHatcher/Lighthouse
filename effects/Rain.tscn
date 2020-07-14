@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/images/rain.png" type="Texture" id=2]
+[ext_resource path="res://assets/images/64x64.png" type="Texture" id=3]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform sampler2D noise;
+
+uniform float intensity : hint_range(0.0,1.0) = 0.05;
+
+void fragment() {
+
+vec2 direction = vec2(-0.1, 0.2);
+
+float movement = TIME * 3.0;
+
+vec4 displacement = texture(noise, fract(UV - direction * movement));
+
+float displacement_length = length(displacement.rgb);
+
+vec2 uv = SCREEN_UV + displacement.rg * intensity * displacement_length;
+
+COLOR = vec4(texture(SCREEN_TEXTURE, uv).rgb, 1.0);
+
+}"
+custom_defines = ""
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/intensity = 1.0
+shader_param/noise = ExtResource( 2 )
+
+[node name="Rain" type="TextureRect"]
+material = SubResource( 2 )
+margin_left = 80.0
+margin_top = -72.0
+margin_right = 784.0
+margin_bottom = 666.0
+rect_scale = Vector2( 0.760001, 0.760001 )
+texture = ExtResource( 3 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}

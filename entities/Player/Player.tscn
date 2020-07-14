@@ -6,7 +6,7 @@
 [ext_resource path="res://fonts/JetBrainsMono-Regular.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://levels/Camera2D.gd" type="Script" id=7]
 [ext_resource path="res://entities/Player/UI.gd" type="Script" id=8]
-[ext_resource path="res://assets/audio/footstep.wav" type="AudioStream" id=9]
+[ext_resource path="res://assets/audio/footstep1.wav" type="AudioStream" id=9]
 [ext_resource path="res://assets/images/run_sheet.png" type="Texture" id=10]
 
 [sub_resource type="OccluderPolygon2D" id=1]
@@ -56,27 +56,41 @@ tracks/1/keys = {
 "update": 1,
 "values": [ 0, 1, 2, 3, 4 ]
 }
+tracks/2/type = "audio"
+tracks/2/path = NodePath("Wood")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 9 )
+} ],
+"times": PoolRealArray( 0 )
+}
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 2, 6 )
-
-[sub_resource type="DynamicFont" id=5]
-size = 12
-font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=6]
 size = 12
 font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=7]
+size = 12
 font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=8]
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=9]
 size = 30
 outline_size = 1
 font_data = ExtResource( 4 )
 
-[sub_resource type="GDScript" id=9]
+[sub_resource type="GDScript" id=10]
 script/source = "extends Label
 
 	# pause is spacebar
@@ -110,9 +124,6 @@ smoothing_enabled = true
 smoothing_speed = 1.0
 script = ExtResource( 7 )
 
-[node name="Footstep" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 9 )
-
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 modulate = Color( 1, 1, 1, 0 )
 position = Vector2( 1, 1 )
@@ -124,7 +135,7 @@ anims/Walk = SubResource( 3 )
 
 [node name="Torso" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 1 )
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="Gunner" type="Sprite" parent="."]
 texture = ExtResource( 10 )
@@ -162,7 +173,7 @@ __meta__ = {
 [node name="HP" type="Label" parent="CanvasLayer/Control/vbox"]
 margin_right = 91.0
 margin_bottom = 15.0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 6 )
 text = "Health Points"
 align = 1
 __meta__ = {
@@ -178,7 +189,7 @@ margin_bottom = 43.0
 margin_top = 47.0
 margin_right = 91.0
 margin_bottom = 62.0
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 7 )
 text = "Ammo"
 
 [node name="AmmoV" type="LineEdit" parent="CanvasLayer/Control/vbox"]
@@ -193,7 +204,7 @@ __meta__ = {
 margin_top = 94.0
 margin_right = 91.0
 margin_bottom = 114.0
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 autowrap = true
 
 [node name="Pause" type="Label" parent="CanvasLayer/Control"]
@@ -207,14 +218,17 @@ margin_left = -54.0
 margin_top = -19.0
 margin_right = 54.0
 margin_bottom = 19.0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 text = "Paused"
 align = 1
 valign = 1
 uppercase = true
-script = SubResource( 9 )
+script = SubResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Wood" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
 [connection signal="fired" from="Gun" to="CanvasLayer/Control" method="_on_Gun_fired"]
