@@ -78,7 +78,7 @@ func _physics_process(delta):
 func handle_shoot() -> void:
 	if (Input.is_action_just_pressed("click")): # left click
 		gun.charge()
-		yield(get_tree().create_timer(1.0),"timeout")
+#		yield(get_tree().create_timer(1.0),"timeout")
 		gun.fire()
 		velocity = Vector2.ZERO
 	if (Input.is_action_just_pressed("reload")): # r 

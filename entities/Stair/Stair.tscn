@@ -1,17 +1,47 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/images/placeholder.png" type="Texture" id=1]
-[ext_resource path="res://entities/Stair/Stair.gd" type="Script" id=2]
 [ext_resource path="res://assets/audio/stairs.wav" type="AudioStream" id=3]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="GDScript" id=1]
+script/source = "extends Area2D
+
+export (int) var level := 0
+
+#onready var scene_tree := get_tree()
+# onready var steps = get_node(\"../stair\")
+
+func _ready() -> void:
+	add_to_group(\"stairs\")
+	
+func warp(entity: KinematicBody2D, direction: int) -> void:
+	var stairs := get_tree().get_nodes_in_group(\"stairs\")
+	var level_next := level + direction
+	
+	if (level_next < 0 || level_next >= stairs.size()):
+		return
+	
+	for stair in stairs:
+		if (stair.level == level_next):
+			entity.global_position = stair.global_position
+			# steps.play()
+			break
+
+func _on_Player_stair_entered(player: KinematicBody2D, direction: int) -> void:
+	if (overlaps_body(player)):
+		warp(player, direction)
+		$Sound.play()
+	
+"
+
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 12, 16 )
 
 [node name="Stair" type="Area2D"]
-script = ExtResource( 2 )
+script = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 0.701961, 0.701961, 0.701961, 1 )

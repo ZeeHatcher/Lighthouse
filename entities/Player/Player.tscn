@@ -4,16 +4,26 @@
 [ext_resource path="res://entities/Player/Player.gd" type="Script" id=2]
 [ext_resource path="res://entities/Gun/Gun.tscn" type="PackedScene" id=3]
 [ext_resource path="res://fonts/JetBrainsMono-Regular.ttf" type="DynamicFontData" id=4]
-[ext_resource path="res://levels/Camera2D.gd" type="Script" id=7]
-[ext_resource path="res://entities/Player/UI.gd" type="Script" id=8]
 [ext_resource path="res://assets/audio/footstep1.wav" type="AudioStream" id=9]
 [ext_resource path="res://assets/images/run_sheet.png" type="Texture" id=10]
 
-[sub_resource type="OccluderPolygon2D" id=1]
+[sub_resource type="GDScript" id=11]
+script/source = "extends Camera2D
+
+export (int) var min_camera_limit = 200
+
+func _process(_delta: float):
+	if abs(get_local_mouse_position().x) > min_camera_limit:
+		if get_local_mouse_position().x > 0:
+			position.x = get_local_mouse_position().x - min_camera_limit
+		else:
+			position.x = get_local_mouse_position().x + min_camera_limit
+"
+
+[sub_resource type="OccluderPolygon2D" id=2]
 polygon = PoolVector2Array( -0.959341, -6.91944, 0.938826, -6.98379, 0.970997, -6.01862, 2.00051, -6.05079, 1.93616, -5.05345, 1.03534, -4.98911, 0.970997, 3.95478, -1.08803, 4.0513, -1.05585, 4.95212, -2.02102, 4.98429, -2.08537, 5.98163, -3, 6, -2.95402, 5.08081, -2.0532, 4.91995, -2.02102, -3.95959, -1.05585, -4.05611 )
 
-[sub_resource type="Animation" id=2]
-resource_name = "Stand"
+[sub_resource type="Animation" id=3]
 length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("Gunner:frame")
@@ -28,8 +38,7 @@ tracks/0/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "Walk"
+[sub_resource type="Animation" id=4]
 length = 0.5
 loop = true
 tracks/0/type = "value"
@@ -74,6 +83,22 @@ tracks/2/keys = {
 [sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 2, 6 )
 
+[sub_resource type="GDScript" id=12]
+script/source = "extends Control
+
+func _ready():
+	$vbox/HPV.text = \"100\"
+	$vbox/AmmoV.text = str(get_node(\"../../Gun\").ammo)
+
+func _on_Gun_fired():
+	$vbox/AmmoV.text = str($\"../../Gun\".ammo)
+	
+func _input(event):
+	if event.is_action_pressed(\"ui_accept\") or event.is_action_pressed(\"ui_cancel\"):
+		for i in $vbox.get_children():
+			i.release_focus()
+"
+
 [sub_resource type="DynamicFont" id=6]
 size = 12
 font_data = ExtResource( 4 )
@@ -90,7 +115,7 @@ size = 30
 outline_size = 1
 font_data = ExtResource( 4 )
 
-[sub_resource type="GDScript" id=10]
+[sub_resource type="GDScript" id=13]
 script/source = "extends Label
 
 	# pause is spacebar
@@ -122,16 +147,17 @@ limit_right = 1250
 limit_bottom = 1000
 smoothing_enabled = true
 smoothing_speed = 1.0
-script = ExtResource( 7 )
+script = SubResource( 11 )
+min_camera_limit = 0
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 modulate = Color( 1, 1, 1, 0 )
 position = Vector2( 1, 1 )
-occluder = SubResource( 1 )
+occluder = SubResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Stand = SubResource( 2 )
-anims/Walk = SubResource( 3 )
+anims/Stand = SubResource( 3 )
+anims/Walk = SubResource( 4 )
 
 [node name="Torso" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 1 )
@@ -143,13 +169,16 @@ hframes = 6
 frame = 1
 
 [node name="Rifle" type="Sprite" parent="."]
-position = Vector2( 4.50532, 1.95203 )
+position = Vector2( 5.50532, 2.95203 )
 texture = ExtResource( 1 )
 hframes = 5
 
 [node name="Gun" parent="." instance=ExtResource( 3 )]
 visible = false
 position = Vector2( -1, -2 )
+
+[node name="Wood" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -158,7 +187,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
 margin_top = 10.0
-script = ExtResource( 8 )
+script = SubResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -224,11 +253,8 @@ text = "Paused"
 align = 1
 valign = 1
 uppercase = true
-script = SubResource( 10 )
+script = SubResource( 13 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Wood" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 9 )
 [connection signal="fired" from="Gun" to="CanvasLayer/Control" method="_on_Gun_fired"]

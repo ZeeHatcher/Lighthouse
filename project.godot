@@ -29,11 +29,6 @@ _global_script_class_icons={
 config/name="Lighthouse"
 run/main_scene="res://levels/TestLab.tscn"
 
-[autoload]
-
-IconLoader="*res://addons/file-editor/scripts/IconLoader.gd"
-LastOpenedFiles="*res://addons/file-editor/scripts/LastOpenedFiles.gd"
-
 [debug]
 
 settings/stdout/verbose_stdout=true
@@ -42,7 +37,6 @@ settings/stdout/verbose_stdout=true
 
 window/size/width=640
 window/size/height=480
-window/size/fullscreen=true
 window/size/test_width=1920
 window/size/test_height=1080
 window/dpi/allow_hidpi=true
@@ -51,7 +45,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "file-editor" )
+enabled=PoolStringArray(  )
 
 [input]
 
