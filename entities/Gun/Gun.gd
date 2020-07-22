@@ -9,11 +9,11 @@ onready var muzzle := $Muzzle
 var ammo := 10
 var ammo_toggle = false
 signal fired
-signal outofammo
 
 #func fire() -> void:
 #	var bullet := SCENES.projectile_bullet.instance()
 #	level.add_child(bullet)
+
 #
 #	bullet.global_position = muzzle.global_position
 #	bullet.point_to(get_global_mouse_position())
@@ -22,6 +22,7 @@ signal outofammo
 onready var scene_lightning = preload("res://entities/Projectile/Lightning/Lightning.tscn")
 func fire():
 	emit_signal("fired")
+	$AnimationPlayer.play("Charge")
 	if ammo != -1:
 		$Splat.play()
 		ammo -= 1
@@ -32,14 +33,14 @@ func fire():
 		lightning.set_point_position(1, get_global_mouse_position() - muzzle.global_position)
 		lightning.area.position = get_global_mouse_position() - muzzle.global_position
 		lightning.shock()
-	else:
-		emit_signal("outofammo")
 		
+	else:
 		if ammo_toggle == false: 
 			$Eject.play()
 			ammo_toggle = true
 
 func reload():
+	
 	ammo_toggle = false
 	ammo = 10
 	$Reload.play()
