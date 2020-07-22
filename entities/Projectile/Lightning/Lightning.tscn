@@ -16,7 +16,3 @@ position = Vector2( 100, 0 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource( 1 )
-
-[node name="ShockTimer" type="Timer" parent="."]
-wait_time = 0.05
-[connection signal="timeout" from="ShockTimer" to="." method="_on_ShockTimer_timeout"]

@@ -3,7 +3,6 @@ extends Line2D
 # References
 onready var level := get_tree().get_root().get_node("TestLab")
 onready var area : Area2D = $Area2D
-onready var shock_timer = $ShockTimer
 var scene_lightning = load("res://entities/Projectile/Lightning/Lightning.tscn")
 
 # Max number of enemies targeted = max_chain_targets ^ max_chain_length + all the previously hit enemies
@@ -16,11 +15,19 @@ var chained_length = 0
 var enemies_hit = []
 var lines = []
 
+onready var shock_timer = get_tree().create_timer(0.0) #0.05s
+#onready var shock_timer = $ShockTimer
+
 func _ready():
 	area.get_node("CollisionShape2D").get_shape().radius = min_chain_radius
 
+func _process(delta):
+	if shock_timer.time_left <= 0.0:
+		 ShockLogic()
+
 func shock():
-	shock_timer.start()
+#	shock_timer.start()
+	shock_timer = get_tree().create_timer(0.05)
 	animate_lightning()
 
 func animate_lightning():
@@ -53,7 +60,7 @@ func animate_lightning():
 		
 		previous_point = next_point
 
-func _on_ShockTimer_timeout():
+func ShockLogic():
 	# get near enemies
 	var overlap_objects = area.get_overlapping_bodies()
 	var overlap_enemies = []

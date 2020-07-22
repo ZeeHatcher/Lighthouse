@@ -28,22 +28,10 @@ shape = SubResource( 2 )
 [node name="Tail" type="Position2D" parent="." index="3"]
 position = Vector2( 0, 16 )
 
-[node name="AttackChargeTimer" type="Timer" parent="." index="4"]
-one_shot = true
-
-[node name="AttackCooldownTimer" type="Timer" parent="." index="5"]
-one_shot = true
-
-[node name="RandomMoveTimer" type="Timer" parent="." index="6"]
-one_shot = true
-
-[node name="Sprite" parent="." index="7"]
+[node name="Sprite" parent="." index="4"]
 texture = ExtResource( 4 )
 
-[node name="Light2D" type="Light2D" parent="." index="8"]
+[node name="Light2D" type="Light2D" parent="." index="5"]
 scale = Vector2( 3.92275, 3.92275 )
 texture = ExtResource( 1 )
 energy = 0.0
-[connection signal="timeout" from="AttackChargeTimer" to="." method="_on_AttackChargeTimer_timeout"]
-[connection signal="timeout" from="AttackCooldownTimer" to="." method="_on_AttackCooldownTimer_timeout"]
-[connection signal="timeout" from="RandomMoveTimer" to="." method="_on_RandomMoveTimer_timeout"]
