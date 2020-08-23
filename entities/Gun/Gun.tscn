@@ -1,29 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/images/rifle.png" type="Texture" id=1]
 [ext_resource path="res://entities/Gun/Gun.gd" type="Script" id=2]
 [ext_resource path="res://assets/audio/clip_eject.wav" type="AudioStream" id=3]
 [ext_resource path="res://assets/audio/reload.wav" type="AudioStream" id=4]
 [ext_resource path="res://assets/audio/Hitsound_squasher.wav" type="AudioStream" id=5]
-[ext_resource path="res://assets/images/light2.png" type="Texture" id=6]
-
-[sub_resource type="OccluderPolygon2D" id=1]
-polygon = PoolVector2Array( 0, 0, 0.0067668, -0.559388, 2.94477, -0.594157, 2.94477, -0.594157, 2.96215, -1.48077, 5.98707, -1.49816, 5.98707, -0.576772, 15.9137, -0.542003, 15.9311, 0.44892, 7.9863, 0.501073, 8.02107, 1.47461, 6.97799, 1.47461, 6.96061, 0.501073, 6.00446, 0.535842, 6.02184, 1.43984, 4.97876, 1.45723, 4.944, 0.518458, 4.02261, 0.518458, 4.00523, 1.43984, -0.0106177, 1.492 )
-
-[sub_resource type="Animation" id=2]
-resource_name = "Charge"
-tracks/0/type = "value"
-tracks/0/path = NodePath("Light2D:energy")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.0, 1.0 ]
-}
 
 [node name="Gun" type="Node2D"]
 script = ExtResource( 2 )
@@ -43,16 +24,4 @@ stream = ExtResource( 4 )
 
 [node name="Splat" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
-
-[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
-occluder = SubResource( 1 )
-
-[node name="Light2D" type="Light2D" parent="."]
-position = Vector2( 16, 0 )
-texture = ExtResource( 6 )
-energy = 0.0
-mode = 2
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Charge = SubResource( 2 )
 [connection signal="finished" from="Reload" to="." method="_on_Reload_finished"]

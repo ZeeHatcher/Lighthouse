@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://assets/images/rifle_run_sheet.png" type="Texture" id=1]
 [ext_resource path="res://entities/Player/Player.gd" type="Script" id=2]
@@ -7,23 +7,10 @@
 [ext_resource path="res://assets/audio/footstep1.wav" type="AudioStream" id=9]
 [ext_resource path="res://assets/images/run_sheet.png" type="Texture" id=10]
 
-[sub_resource type="GDScript" id=11]
-script/source = "extends Camera2D
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 2, 6 )
 
-export (int) var min_camera_limit = 200
-
-func _process(_delta: float):
-	if abs(get_local_mouse_position().x) > min_camera_limit:
-		if get_local_mouse_position().x > 0:
-			position.x = get_local_mouse_position().x - min_camera_limit
-		else:
-			position.x = get_local_mouse_position().x + min_camera_limit
-"
-
-[sub_resource type="OccluderPolygon2D" id=2]
-polygon = PoolVector2Array( -0.959341, -6.91944, 0.938826, -6.98379, 0.970997, -6.01862, 2.00051, -6.05079, 1.93616, -5.05345, 1.03534, -4.98911, 0.970997, 3.95478, -1.08803, 4.0513, -1.05585, 4.95212, -2.02102, 4.98429, -2.08537, 5.98163, -3, 6, -2.95402, 5.08081, -2.0532, 4.91995, -2.02102, -3.95959, -1.05585, -4.05611 )
-
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("Gunner:frame")
@@ -38,23 +25,25 @@ tracks/0/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 length = 0.5
 loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Gunner:frame")
+tracks/0/type = "audio"
+tracks/0/path = NodePath("Wood")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 1, 2, 3, 4, 4 ]
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 9 )
+} ],
+"times": PoolRealArray( 0 )
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Rifle:frame")
+tracks/1/path = NodePath("Gunner:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -63,39 +52,52 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 0, 1, 2, 3, 4 ]
+"values": [ 2, 3, 4, 5, 5 ]
 }
-tracks/2/type = "audio"
-tracks/2/path = NodePath("Wood")
+tracks/2/type = "value"
+tracks/2/path = NodePath("Rifle:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"clips": [ {
-"end_offset": 0.0,
-"start_offset": 0.0,
-"stream": ExtResource( 9 )
-} ],
-"times": PoolRealArray( 0 )
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4 ]
 }
 
-[sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 2, 6 )
+[sub_resource type="GDScript" id=4]
+script/source = "extends Camera2D
 
-[sub_resource type="GDScript" id=12]
-script/source = "extends Control
+export (int) var min_camera_limit = 200
+
+func _process(_delta: float):
+	if abs(get_local_mouse_position().x) > min_camera_limit:
+		if get_local_mouse_position().x > 0:
+			position.x = get_local_mouse_position().x - min_camera_limit
+		else:
+			position.x = get_local_mouse_position().x + min_camera_limit
+"
+
+[sub_resource type="GDScript" id=5]
+script/source = "extends VBoxContainer
+
+onready var player = get_tree().get_root().get_node(\"TestLab\").get_node(\"Player\")
 
 func _ready():
-	$vbox/HPV.text = \"100\"
-	$vbox/AmmoV.text = str(get_node(\"../../Gun\").ammo)
+	$HPV.text = \"100\"
+	$AmmoV.text = str(get_node(\"../../Gun\").ammo)
 
 func _on_Gun_fired():
-	$vbox/AmmoV.text = str($\"../../Gun\".ammo)
+	$AmmoV.text = str(get_node(\"../../Gun\").ammo)
+	
+func _physics_process(delta):
+	$Velocity.text = str(player.velocity.x)
 	
 func _input(event):
 	if event.is_action_pressed(\"ui_accept\") or event.is_action_pressed(\"ui_cancel\"):
-		for i in $vbox.get_children():
+		for i in get_children():
 			i.release_focus()
 "
 
@@ -115,7 +117,7 @@ size = 30
 outline_size = 1
 font_data = ExtResource( 4 )
 
-[sub_resource type="GDScript" id=13]
+[sub_resource type="GDScript" id=10]
 script/source = "extends Label
 
 	# pause is spacebar
@@ -134,8 +136,34 @@ func _process(_delta) -> void:
 "
 
 [node name="Player" type="KinematicBody2D"]
-collision_layer = 2
+scale = Vector2( 3, 3 )
+collision_layer = 2147483651
+collision_mask = 2147483650
 script = ExtResource( 2 )
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 1 )
+shape = SubResource( 1 )
+
+[node name="Animation" type="Node2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Animation"]
+anims/Stand = SubResource( 2 )
+anims/Walk = SubResource( 3 )
+
+[node name="Gunner" type="Sprite" parent="Animation"]
+texture = ExtResource( 10 )
+hframes = 6
+
+[node name="Rifle" type="Sprite" parent="Animation"]
+position = Vector2( 4.99925, 2.99473 )
+texture = ExtResource( 1 )
+hframes = 5
+
+[node name="Wood" type="AudioStreamPlayer" parent="Animation"]
+stream = ExtResource( 9 )
+
+[node name="Tween" type="Tween" parent="."]
 
 [node name="Camera" type="Camera2D" parent="."]
 visible = false
@@ -147,60 +175,27 @@ limit_right = 1250
 limit_bottom = 1000
 smoothing_enabled = true
 smoothing_speed = 1.0
-script = SubResource( 11 )
+script = SubResource( 4 )
 min_camera_limit = 0
-
-[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
-modulate = Color( 1, 1, 1, 0 )
-position = Vector2( 1, 1 )
-occluder = SubResource( 2 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Stand = SubResource( 3 )
-anims/Walk = SubResource( 4 )
-
-[node name="Torso" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 1 )
-shape = SubResource( 5 )
-
-[node name="Gunner" type="Sprite" parent="."]
-texture = ExtResource( 10 )
-hframes = 6
-frame = 1
-
-[node name="Rifle" type="Sprite" parent="."]
-position = Vector2( 5.50532, 2.95203 )
-texture = ExtResource( 1 )
-hframes = 5
 
 [node name="Gun" parent="." instance=ExtResource( 3 )]
 visible = false
 position = Vector2( -1, -2 )
 
-[node name="Wood" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 9 )
+[node name="HUD" type="CanvasLayer" parent="."]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="Control" type="Control" parent="CanvasLayer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="Text" type="VBoxContainer" parent="HUD"]
 margin_left = 10.0
 margin_top = 10.0
-script = SubResource( 12 )
+margin_right = 101.0
+margin_bottom = 124.0
+script = SubResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="vbox" type="VBoxContainer" parent="CanvasLayer/Control"]
-margin_right = 91.0
-margin_bottom = 43.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HP" type="Label" parent="CanvasLayer/Control/vbox"]
-margin_right = 91.0
+[node name="HP" type="Label" parent="HUD/Text"]
+margin_right = 164.0
 margin_bottom = 15.0
 custom_fonts/font = SubResource( 6 )
 text = "Health Points"
@@ -209,52 +204,57 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HPV" type="LineEdit" parent="CanvasLayer/Control/vbox"]
-margin_top = 19.0
-margin_right = 91.0
-margin_bottom = 43.0
+[node name="HPV" type="LineEdit" parent="HUD/Text"]
+margin_top = 23.0
+margin_right = 164.0
+margin_bottom = 68.0
 
-[node name="Ammo" type="Label" parent="CanvasLayer/Control/vbox"]
-margin_top = 47.0
-margin_right = 91.0
-margin_bottom = 62.0
+[node name="Ammo" type="Label" parent="HUD/Text"]
+margin_top = 76.0
+margin_right = 164.0
+margin_bottom = 91.0
 custom_fonts/font = SubResource( 7 )
 text = "Ammo"
-
-[node name="AmmoV" type="LineEdit" parent="CanvasLayer/Control/vbox"]
-margin_top = 66.0
-margin_right = 91.0
-margin_bottom = 90.0
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Velocity" type="Label" parent="CanvasLayer/Control/vbox"]
-margin_top = 94.0
-margin_right = 91.0
-margin_bottom = 114.0
+[node name="AmmoV" type="LineEdit" parent="HUD/Text"]
+margin_top = 99.0
+margin_right = 164.0
+margin_bottom = 144.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Velocity" type="Label" parent="HUD/Text"]
+margin_top = 152.0
+margin_right = 164.0
+margin_bottom = 172.0
 custom_fonts/font = SubResource( 8 )
+align = 1
 autowrap = true
 
-[node name="Pause" type="Label" parent="CanvasLayer/Control"]
+[node name="Pause" type="Label" parent="HUD"]
 pause_mode = 2
 visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -54.0
-margin_top = -19.0
-margin_right = 54.0
-margin_bottom = 19.0
+margin_left = -49.0
+margin_top = -14.0
+margin_right = 59.0
+margin_bottom = 24.0
 custom_fonts/font = SubResource( 9 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 text = "Paused"
 align = 1
 valign = 1
 uppercase = true
-script = SubResource( 13 )
+script = SubResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="fired" from="Gun" to="CanvasLayer/Control" method="_on_Gun_fired"]
+[connection signal="fired" from="Gun" to="HUD/Text" method="_on_Gun_fired"]

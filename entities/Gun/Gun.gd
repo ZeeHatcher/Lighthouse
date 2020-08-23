@@ -8,22 +8,13 @@ onready var level := root.get_node("TestLab")
 onready var muzzle := $Muzzle
 var ammo := 10
 var ammo_toggle = false
+
 signal fired
-
-#func fire() -> void:
-#	var bullet := SCENES.projectile_bullet.instance()
-#	level.add_child(bullet)
-
-#
-#	bullet.global_position = muzzle.global_position
-#	bullet.point_to(get_global_mouse_position())
-
 
 onready var scene_lightning = preload("res://entities/Projectile/Lightning/Lightning.tscn")
 func fire():
 	emit_signal("fired")
-	$AnimationPlayer.play("Charge")
-	if ammo != -1:
+	if ammo >= 1:
 		$Splat.play()
 		ammo -= 1
 		var lightning : Line2D = scene_lightning.instance()
@@ -40,13 +31,11 @@ func fire():
 			ammo_toggle = true
 
 func reload():
-	
 	ammo_toggle = false
 	ammo = 10
 	$Reload.play()
 
-func charge():
-	pass
+
 
 func _on_Reload_finished():
 	emit_signal("fired")
